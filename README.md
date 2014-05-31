@@ -1,4 +1,8 @@
-Easy-Site-Builder
-=================
+<h1>Node.js Google Maps Plan Your Trip<h1>
 
-Build your application, with prepared tools. No need to know javascript, php, css or any other programming language, just log in to the administrator panel and create your world! 
+<p>Application will help you and your friend to plan your trip anywhere you want to go!</p>
+<p>Plan your trip together LIVE, via webbrowser.</p>
+<p>Place markers on the map, talk with your friends via chat. Move your map and show places where you want to go<p>
+
+
+<h2>Start Planning today with PLAN YOUR TRIP<h2>
