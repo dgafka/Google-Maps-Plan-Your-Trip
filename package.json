@@ -1,0 +1,30 @@
+{
+  "name": "Google-Maps-Plan-Your-Trip",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "*",
+    "ejs-locals-improved": "1.0.3",
+    "express": "~3.5.2",
+    "redis": "0.8.3",
+    "socket.io": "~0.9.16",
+    "less-middleware": "^0.1.15",
+    "passport" : "~0.1.17",
+    "passport.socketio": "^3.0.1",
+    "passport-local" : "~0.1.6",
+    "passport-facebook" : "~1.0.2",
+    "passport-twitter" : "~1.0.2",
+    "passport-google-oauth" : "~0.1.5",
+    "connect-flash" : "~0.1.1",
+    "bcrypt-nodejs" : "latest"
+  },
+  "authors": [
+      "dgafka <dariuszgafka@gmail.com>"
+  ],
+  "license": "ISC"
+}
