@@ -21,11 +21,22 @@ module.exports = function (app, passport) {
     /**
      * Route for register submit
      */
-   app.post('/signup', passport.authenticate('local-signup', {
-       successRedirect : '/',       /** redirect to main page with session on */
-       failureRedirect : '/signup', /** redirect to sign up, if fails         */
-       failureFlash : true          /** allow flash messages                  */
-    }))
+   app.post('/signup', function(req, res){
+       var email    = req.body.email;
+       var password = req.body.password;
+       var username = req.body.username;
+
+       var userManager     = require('../modules/UserManagment');
+       var userCtlInstance = new userManager();
+
+       userCtlInstance.addUser({email: email, username: username, password: password}, function(errors){
+           if(errors.type == 'danger') {
+               return res.render('signup', {message: errors});
+           }
+           req.flash('message', errors);
+           return res.redirect('/');
+       })
+   })
 
     /**
      * Route for login form
@@ -43,10 +54,63 @@ module.exports = function (app, passport) {
         failureFlash : true          /** allow flash messages                  */
     }))
 
+    /**
+     * Destroy user session
+     */
     app.get('/logout', function(req, res){
         req.logout();
         res.redirect('/');
     })
+
+
+    /**
+     * Route for facebook authorization
+     */
+    app.get('/auth/facebook', passport.authenticate('facebook'));
+
+    /**
+     * Route for facebook return callback
+     */
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/',
+            failureRedirect: '/',
+            failureFlash : true
+        }));
+
+
+    /**
+     * Twitter authentication
+     */
+    app.get('/auth/twitter', passport.authenticate('twitter'));
+
+    /**
+     * Twitter callback
+     */
+    app.get('/auth/twitter/callback',
+        passport.authenticate('twitter', {
+            successRedirect : '/',
+            failureRedirect : '/'
+        })
+    );
+
+
+    /**
+     * Authenticate via google
+     */
+    app.get('/auth/google', passport.authenticate('google'));
+
+    /**
+     * Google callback with user data
+     */
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect : '/',
+            failureRedirect : '/'
+        })
+    );
+
+
 
     /**
      * Checks if user is logged in
