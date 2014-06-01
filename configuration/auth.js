@@ -1,3 +1,7 @@
+/**
+ *  Here you need to pass your authorization keys
+ *  from developer account on facebook, twitter and google.
+ */
 module.exports = {
 
     'facebookAuth' : {
