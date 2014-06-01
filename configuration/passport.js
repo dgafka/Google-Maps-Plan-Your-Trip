@@ -7,69 +7,72 @@
 
 
 var LocalStrategy   = require('passport-local').Strategy;       /** Local Strategy go for passport docs, if need more informations */
+var userManagment   = require('../modules/UserManagment');      /** Manager class for users.                                       */
 
 module.exports = function(passport) {
 
     /**      used to serialize the user             */
     passport.serializeUser(function(user, done) {
-        done(null, user.email);
+        done(null, user);
     });
 
     /**      used to deserialize the user           */
-    passport.deserializeUser(function(email, done) {
-//        var usr = new userController();
-//        usr.findUserByEmail(email, function(obj){
-//            done(null, obj);
-//        })
+    passport.deserializeUser(function(obj, done) {
+        done(null, obj);
     });
 
     /** Local-signup is strategy for registration new user */
     passport.use('local-signup', new LocalStrategy({
-//            // by default, local strategy uses username and password, we will override with email
-//            usernameField : 'email',
-//            passwordField : 'password',
-//            passReqToCallback : true // allows us to pass back the entire request to the callback
-//        },
-//        function(req, email, password, done) {
-//
-//            /**
-//             * process.nextTick delegates method to the end of this loop queue, to be sure, everything
-//             * will be loaded before starting the function.
-//             */
-//            process.nextTick(function() {
-//
-//                var usr = new userController();
-//                usr.findUserByEmail(email, function(obj){
-//                    if(obj) {
-//                        return done(null, false, req.flash('message', 'Email already taken. Pick another one.'));
-//                    }
-//                    var user = usr.addUser(email, password);
-//                    return done(null, user);
-//
-//                })
-//
-//            });
+            // by default, local strategy uses username and password, we will override with email
+            usernameField : 'email',
+            passwordField : 'password',
+            passReqToCallback : true // allows us to pass back the entire request to the callback
+        },
+        function(req, email, password, done) {
+
+            process.nextTick(function() {
+
+                var userManager = new userManagment();
+
+                userManager.addUser({email: email, password: password}, function(user){
+                    if(user.errorList){
+                        return done(null, false, req.flash('message', user))
+                    }
+
+                    req.flash('message', {
+                        errorList : ['Registered successfully.'],
+                        type      : 'success'
+                    });
+                    return done(null, user);
+                })
+
+            });
 
         }));
 
     passport.use('local-login', new LocalStrategy({
-//        // by default, local strategy uses username and password, we will override with email
-//        usernameField : 'email',
-//        passwordField : 'password',
-//        passReqToCallback : true // allows us to pass back the entire request to the callback
-//    }, function(req, email, password, done){
-//
-//        process.nextTick(function() {
-//            var usr = new userController();
-//            usr.findUserByEmailPassword(email, password, function(obj) {
-//                if(obj == false) {
-//                    return done(null, false, req.flash('message', 'Wrong email / password. Try again.'))
-//                }
-//
-//                /** Succesfully logged in */
-//                return done(null, obj)
-//            })
-//        })
+        // by default, local strategy uses username and password, we will override with email
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true // allows us to pass back the entire request to the callback
+    }, function(req, email, password, done){
+
+        process.nextTick(function() {
+
+            var userManager = new userManagment();
+            userManager.authenticateUserByEmailPassoword(email, password, function(user){
+                if(user.errorList){
+                    return done(null, false, req.flash('message', user))
+                }
+
+                req.flash('message', {
+                    errorList : ['Logged successfully.'],
+                    type      : 'success'
+                });
+                return done(null, user);
+            })
+
+        })
     }))
 
 };

@@ -1,6 +1,6 @@
 <% include header.ejs %>
         <script src="/js/index.js"></script>
-        <% if (!(locals.email) || email.length < 1) { %>
+        <% if (!(typeof email === "undefined") && email.length < 1) { %>
             <div class="jumbotron text-center">
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
@@ -112,8 +112,8 @@
             </div>
         <% } else { %>
             <div class="jumbotron text-center">
-                <button class="btn btn-info" style="width: 200px;" id="chat_room"><img src="/img/chat_room.jpg" class="login_image"> Chat room</button>
-                <button class="btn btn-primary" style="width: 200px;" id="logout"><img src="/img/local.png" class="login_image">Logout</button>
+                <p>Hello, <%= email %>.</p>
+                <button class="btn btn-info" style="width: 200px;" id="chat_room"><i class="fa fa-comments fa-3x"></i> Join Rooms</button>
             </div>
         <% } %>
 <% include footer.ejs %>

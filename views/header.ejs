@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Plan Your Trip Authentication</title>
+    <title>Plan Your Trip</title>
     <script type="text/javascript" src="/jquery.min.js"></script>
     <link rel="stylesheet" href='/css/bootstrap.min.css' />
     <script type="text/javascript" src='/js/bootstrap.min.js'></script>
@@ -26,7 +26,7 @@
             <ul class="nav navbar-nav">
                 <li class=""><a href="/rooms">Trip rooms</a></li>
             </ul>
-            <% if (locals.email && email.length > 0) { %>
+            <% if (!(typeof email === "undefined") && email.length > 0) { %>
                 <p class="navbar-text navbar-right"><a href="/logout" class="navbar-link">Logout</a></p>
                 <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link" id="emailBar"><%= email %></a></p>
             <% } %>
@@ -35,6 +35,4 @@
 </div>
 
 <!-- Flash messages -->
-<% if (locals.message  && message.length > 0) { %>
-<div class="alert alert-danger"><%= message %></div>
-<% } %>
+<% include errors.ejs %>

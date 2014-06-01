@@ -3,7 +3,7 @@
 // Configuration for server application
 //
 //*******************************
-module.exports = function(app, server, express, passport, io, flash, path, less) {
+module.exports = function(app, server, express, passport, io, flash, path, less, mongoose) {
 
     app.configure(function(){
 
@@ -75,12 +75,14 @@ module.exports = function(app, server, express, passport, io, flash, path, less)
 
     var routes      = require('../routes/routes')(app, passport);                        /**     Routes handler   */
 
-//    require('./passport')(passport);                      /** Passport configuration */
-//    require('./passport_socketio')(io, passport, {        /** Passport socket.io authorization */
+    require('./passport')(passport);                                                    /** Passport configuration */
+//    require('./passport_socketio')(io, express, passport, {        /** Passport socket.io authorization */
 //        sessionKey   :  sessionKey,
 //        sessionSecret:  sessionSecret,
 //        sessionStore :  sessionStore
 //    })
+
+    mongoose.connect('mongodb://localhost/planyourtrip');               /** Connect to mongo server                 */
 
     /** Server starts to listen on port 3000 */
     server.listen(3000, function() {

@@ -1,0 +1,8 @@
+<!-- Flash messages -->
+<% if (message && message.errorList instanceof Array) {%>
+    <% var classType = 'alert alert-' + message.type %>
+    <% for(var i=0; i<message.errorList.length; i++) {%>
+        <div class="<%= classType %>"><%= message.errorList[i] %></div>
+    <% } %>
+<% } %>
+

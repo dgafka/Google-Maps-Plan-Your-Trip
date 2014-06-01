@@ -12,6 +12,7 @@ var passport            = require('passport');                      /** Passport
 var path                = require('path');                          /** Handles joining path (to libaries for example) to use them in application */
 var less                = require('less-middleware');               /** Less compiler                                       */
 var flash 	            = require('connect-flash');                 /** Session Flash support                               */
+var mongoose            = require('mongoose');                      /** Mongo database support                              */
 
 
-require('./configuration/application')(app, server, express, passport, io, flash, path, less);
+require('./configuration/application')(app, server, express, passport, io, flash, path, less, mongoose);

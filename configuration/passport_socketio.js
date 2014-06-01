@@ -17,7 +17,7 @@ var onAuthorizeFail = function (data, message, error, accept) {
     accept(null, false);
 };
 
-module.exports = function(io, passport, option) {
+module.exports = function(io, express, passport, option) {
     var passportSocketIo = require('passport.socketio');
 
     io.set('authorization', passportSocketIo.authorize({
