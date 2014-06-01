@@ -2,13 +2,113 @@
         <script src="/js/index.js"></script>
         <% if (!(locals.email) || email.length < 1) { %>
             <div class="jumbotron text-center">
-                <h1><span class="glyphicon glyphicon-lock"></span>Pick Authentication Type</h1>
-                <button class="btn btn-primary" style="width: 200px" id="login_locally"><img src="/img/local.png" class="login_image">Login locally</button>
-                <button class="btn btn-primary" style="width: 200px" id="login_twitter"><img src="/img/twitter.png" class="login_image">Login via Twitter</button>
-                <button class="btn btn-primary" style="width: 200px" id="login_facebook"><img src="/img/facebook.png" class="login_image">Login via Facebook</button>
-                <button class="btn btn-primary" style="width: 200px" id="login_google"><img src="/img/google.png" class="login_image">Login via Google</button>
-                <br/>
-                <button class="btn btn-info" style="width: 200px; margin-top: 20px"  id="register_locally">Register locally</button>
+                <div class="panel panel-default">
+                    <div class="panel panel-heading">
+                        <h1><span class="glyphicon glyphicon-lock"></span>Pick Authentication Type</h1>
+                    </div>
+                    <div class="panel-body main-content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <button class="btn btn-primary" id="register_locally">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <i class="fa fa-male fa-4x"></i>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <span class="authorization-type">Register<br/>Locally</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <button class="btn btn-primary" id="login_locally">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <i class="fa fa-share-alt-square fa-4x"></i>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <span class="authorization-type">Login <br/>Locally</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <button class="btn btn-primary" id="anonymous_locally">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <i class="fa fa-share-square fa-4x"></i>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <span class="authorization-type">Anonymous <br/>Locally</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <button class="btn btn-primary" id="login_twitter">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <i class="fa fa-twitter-square fa-4x"></i>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <span class="authorization-type">Twitter</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <button class="btn btn-primary" id="login_facebook">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <i class="fa fa-facebook-square fa-4x"></i>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-4">
+                                                    <span class="authorization-type">Facebook</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                    <button class="btn btn-primary" id="login_google">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-4">
+                                                <i class="fa fa-google-plus-square fa-4x"></i>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-4">
+                                                <span class="authorization-type">Google</span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         <% } else { %>
             <div class="jumbotron text-center">
@@ -16,5 +116,4 @@
                 <button class="btn btn-primary" style="width: 200px;" id="logout"><img src="/img/local.png" class="login_image">Logout</button>
             </div>
         <% } %>
-<p><i class="icon-camera-retro icon-large"></i> icon-camera-retro</p>
 <% include footer.ejs %>

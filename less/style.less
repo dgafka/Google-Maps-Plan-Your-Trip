@@ -1,6 +1,29 @@
 body {
-  height: 100%;
-  .test {
-    background-color: red;
+  .jumbotron.text-center {
+      .authorization-type {
+        font-weight: bold;
+      }
+  }
+
+  .main-content {
+    margin-left: 12%;
+    text-align: center;
+    .col-md-4 {
+      button {
+        width: 200px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .main-content {
+      margin-left: 35%;
+    }
+  }
+
+  @media screen and (max-width: 600px){
+    .main-content {
+      margin-left: 0%;
+    }
   }
 }

@@ -1,6 +1,20 @@
-body {
-  height: 100%;
+body .jumbotron.text-center .authorization-type {
+  font-weight: bold;
 }
-body .test {
-  background-color: red;
+body .main-content {
+  margin-left: 12%;
+  text-align: center;
+}
+body .main-content .col-md-4 button {
+  width: 200px;
+}
+@media screen and (max-width: 1000px) {
+  body .main-content {
+    margin-left: 35%;
+  }
+}
+@media screen and (max-width: 600px) {
+  body .main-content {
+    margin-left: 0%;
+  }
 }
