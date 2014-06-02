@@ -4,18 +4,36 @@ module.exports = function (app, passport) {
      * Route to main page.
      */
     app.get('/', function(req, res) {
-        var email = '';
-        if(req.user) {
-            email = req.user.email;
-        }
-        res.render('index.ejs', { message: req.flash('message')[0], email: email});
+        res.render('index.ejs', { message: req.flash('message')[0], 'req': req});
+    })
+
+    /**
+     * Route for rooms
+     */
+    app.get('/rooms', isLogged, function(req, res){
+        res.render('rooms.ejs', { message: req.flash('message')[0], 'req': req})
+    })
+
+    app.get('/test', function(req, res){
+        var roomManagement = require('../modules/RoomManagement');
+        var roomHelper     = new roomManagement();
+//        roomHelper.addRoom({username : 'daro', password: 'test2', roomName: 'testowy pokoj'}, function(room){
+//            console.log(room);
+//        })
+//
+//        roomHelper.removeRoom({username: 'Dariusz Gafka'})
+//        roomHelper.removeRoom({roomName: 'testowy pokoj2'})
+
+        roomHelper.index(function(rooms){
+            console.log(rooms);
+        });
     })
 
     /**
      * Route to register form
      */
     app.get('/signup', isLoggedOff, function(req, res){
-        res.render('signup.ejs', { message: req.flash('message')[0]});
+        res.render('signup.ejs', { message: req.flash('message')[0], 'req': req});
     })
 
     /**
@@ -26,12 +44,12 @@ module.exports = function (app, passport) {
        var password = req.body.password;
        var username = req.body.username;
 
-       var userManager     = require('../modules/UserManagment');
+       var userManager     = require('../modules/UserManagement');
        var userCtlInstance = new userManager();
 
        userCtlInstance.addUser({email: email, username: username, password: password}, function(errors){
            if(errors.type == 'danger') {
-               return res.render('signup', {message: errors});
+               return res.render('signup', {message: errors, 'req': req});
            }
            req.flash('message', errors);
            return res.redirect('/');
@@ -42,7 +60,7 @@ module.exports = function (app, passport) {
      * Route for login form
      */
     app.get('/login', isLoggedOff, function(req, res){
-        res.render('login.ejs', {message: req.flash('message')[0]})
+        res.render('login.ejs', {message: req.flash('message')[0], 'req': req})
     })
 
     /**
@@ -53,14 +71,6 @@ module.exports = function (app, passport) {
         failureRedirect : '/login', /** redirect to sign up, if fails         */
         failureFlash : true          /** allow flash messages                  */
     }))
-
-    /**
-     * Destroy user session
-     */
-    app.get('/logout', function(req, res){
-        req.logout();
-        res.redirect('/');
-    })
 
 
     /**
@@ -110,7 +120,13 @@ module.exports = function (app, passport) {
         })
     );
 
-
+    /**
+     * Destroy user session
+     */
+    app.get('/logout', function(req, res){
+        req.logout();
+        res.redirect('/');
+    })
 
     /**
      * Checks if user is logged in

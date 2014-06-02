@@ -7,7 +7,7 @@
 
 
 var LocalStrategy    = require('passport-local').Strategy;       /** Local Strategy go for passport docs, if need more informations */
-var userManagment    = require('../modules/UserManagment');      /** Manager class for users.                                       */
+var userManagment    = require('../modules/UserManagement');      /** Manager class for users.                                       */
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy  = require('passport-twitter').Strategy;
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;

@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!--<meta name="viewport" content="width=device-width">-->
+    <meta name="viewport" content="initial-scale=1">
     <title>Plan Your Trip</title>
     <script type="text/javascript" src="/jquery.min.js"></script>
     <link rel="stylesheet" href='/css/bootstrap.min.css' />
@@ -26,9 +28,9 @@
             <ul class="nav navbar-nav">
                 <li class=""><a href="/rooms">Trip rooms</a></li>
             </ul>
-            <% if (!(typeof email === "undefined") && email.length > 0) { %>
+            <% if (!(typeof req.user === "undefined")) { %>
                 <p class="navbar-text navbar-right"><a href="/logout" class="navbar-link">Logout</a></p>
-                <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link" id="emailBar"><%= email %></a></p>
+                <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link" id="emailBar"><%= req.user.email %></a></p>
             <% } %>
         </div>
     </div>

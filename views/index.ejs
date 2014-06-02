@@ -1,6 +1,6 @@
 <% include header.ejs %>
         <script src="/js/index.js"></script>
-        <% if (!(typeof email === "undefined") && email.length < 1) { %>
+        <% if ((typeof req.user === "undefined")) { %>
             <div class="jumbotron text-center">
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
@@ -112,7 +112,7 @@
             </div>
         <% } else { %>
             <div class="jumbotron text-center">
-                <p>Hello, <%= email %>.</p>
+                <p>Hello, <%= req.user.email %>.</p>
                 <button class="btn btn-info" style="width: 200px;" id="chat_room"><i class="fa fa-comments fa-3x"></i> Join Rooms</button>
             </div>
         <% } %>
