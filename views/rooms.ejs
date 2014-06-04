@@ -1,3 +1,41 @@
 <% include header.ejs%>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src='/js/rooms.js'></script>
+<script type="text/javascript" src='/js/sockets/rooms.js'></script>
+
+<div class="rooms">
+    <div class="list-group">
+        <a href="#WelcomeToPlanYourTrip" class="list-group-item active">
+            List of active rooms
+            <a href="#" class="btn btn-success btn-group-vertical" id="room_create" data-toggle="modal" data-target="#basicModal">
+                <i class="fa fa-weixin"></i> Create Room
+            </a>
+        </a>
+
+        <% for(var i=0; i<rooms.length; i++) {%>
+            <a href="/rooms/<%= rooms[i].id %>" class="list-group-item" id="<%= rooms[i].id %>">
+                <span class="room_name"><%= rooms[i].name %></span>
+                <hr>
+                <span class="badge"><%= rooms[i].owner %></span>
+                <span class="badge">5 <i class="fa fa-child"></i></span>
+                <% if(rooms[i].password == "true") { %> <span class="badge"><i class="fa fa-lock"></i></span> <% } %>
+                <span class="badge">
+                    <% if(rooms[i].provider == 'Facebook') { %>
+                        <i class="fa fa-facebook"></i>
+                    <% } else if(rooms[i].provider == 'Google') { %>
+                        <i class="fa fa-google"></i>
+                    <% } else if(rooms[i].provider == 'Twitter') { %>
+                        <i class="fa fa-twitter"></i>
+                    <% } else { %>
+                        <i class="fa fa-laptop"></i>
+                    <% } %>
+                </span>
+                <hr>
+            </a>
+        <% } %>
+
+    </div>
+    <% include room_create.ejs %>
+</div>
 
 <% include footer.ejs %>

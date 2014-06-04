@@ -15,6 +15,8 @@ module.exports = function() {
                 var roomDescription = {
                     'name'     : rooms[i].name,
                     'owner'    : rooms[i].user.username,
+                    'password' : rooms[i].password == '' ? 'false' : 'true',
+                    'id'       : rooms[i].id,
                     'provider' : rooms[i].user.google.googleId ? 'Google' : (rooms[i].user.facebook.facebookId ? 'Facebook' : (rooms[i].user.twitter.twitterId ? 'Twitter' : 'Local'))
                 }
                 roomsDescription.push(roomDescription)
@@ -38,6 +40,9 @@ module.exports = function() {
         if(options.roomName.length < 6) {
             errors.errorList.push('Sorry, but room\'s names should be atleast 6 letters long.');
         }
+        if(options.roomName.length > 25) {
+            errors.errorList.push('Sorry, but room\'s names shouldn\'t longer than 25 letters long.');
+        }
 
         var roomModel = new this.room();
         this.user.findOne({username: options.username}, function(err, user) {
@@ -45,7 +50,7 @@ module.exports = function() {
                 return console.error(err);
             }
 
-            if(user) {
+            if(errors.errorList.length < 1 && user) {
                 this.room.findOne({$or : [{user: user}, {name: options.roomName}]}, function(err, room){
                     if(err) {
                         return console.error(err);
@@ -69,9 +74,16 @@ module.exports = function() {
                             }
                         })
                     }
+                    if(errors.errorList.length > 0) {
+                        callback(errors)
+                    }else {
+                        callback(roomModel);
+                    }
                 })
             }else {
-                errors.errorList.push('Sorry, You can\'t create room, there was an unexpected error.');
+                if(errors.errorList.length < 1) {
+                    errors.errorList.push('Sorry, You can\'t create room, there was an unexpected error.');
+                }
             }
 
             //check if any errors arrived
@@ -80,7 +92,6 @@ module.exports = function() {
                 return;
             }
 
-            callback(roomModel);
         }.bind(this))
 
     }

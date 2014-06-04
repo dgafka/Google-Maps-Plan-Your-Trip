@@ -11,7 +11,39 @@ module.exports = function (app, passport) {
      * Route for rooms
      */
     app.get('/rooms', isLogged, function(req, res){
-        res.render('rooms.ejs', { message: req.flash('message')[0], 'req': req})
+        var roomManagement = require('../modules/RoomManagement');
+        var roomHelper     = new roomManagement();
+
+        roomHelper.index(function(rooms){
+            for(var i=0; i<rooms.length; i++){
+                rooms[i].onlineUsers = 0;
+            }
+            res.render('rooms.ejs', { message: req.flash('message')[0], 'req': req, rooms: rooms})
+        });
+    })
+
+    app.post('/rooms/create', isLogged, function(req, res){
+        var roomManagement = require('../modules/RoomManagement');
+        var roomHelper     = new roomManagement();
+
+        var name     = req.body.name;
+        var password = req.body.password;
+
+        roomHelper.addRoom({
+            roomName: name,
+            password: password,
+            username: req.user.username
+        }, function(results){
+            var results = (typeof results.errorList !== "undefined" && results.errorList.length > 0) ? results : false;
+            if(!results) {
+                results = {
+                    errorList : ['Room has been created.'],
+                    type      : 'success'
+                }
+            }
+
+            return res.json(JSON.stringify(results));
+        })
     })
 
     app.get('/test', function(req, res){
