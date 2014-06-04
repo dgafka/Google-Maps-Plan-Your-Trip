@@ -11,28 +11,9 @@
                 <i class="fa fa-weixin"></i> Create Room
             </a>
         </a>
+        <div id="room_storage">
 
-        <% for(var i=0; i<rooms.length; i++) {%>
-            <a href="/rooms/<%= rooms[i].id %>" class="list-group-item room-join" id="<%= rooms[i].id %>">
-                <span class="room_name"><%= rooms[i].name %></span>
-                <hr>
-                <span class="badge"><%= rooms[i].owner %></span>
-                <span class="badge">5 <i class="fa fa-child"></i></span>
-                <% if(rooms[i].password == "true") { %> <span class="badge"><i class="fa fa-lock"></i></span> <% } %>
-                <span class="badge">
-                    <% if(rooms[i].provider == 'Facebook') { %>
-                        <i class="fa fa-facebook"></i>
-                    <% } else if(rooms[i].provider == 'Google') { %>
-                        <i class="fa fa-google"></i>
-                    <% } else if(rooms[i].provider == 'Twitter') { %>
-                        <i class="fa fa-twitter"></i>
-                    <% } else { %>
-                        <i class="fa fa-laptop"></i>
-                    <% } %>
-                </span>
-                <hr>
-            </a>
-        <% } %>
+        </div>
 
     </div>
     <% include room_create.ejs %>

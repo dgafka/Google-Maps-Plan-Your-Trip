@@ -1,0 +1,25 @@
+<a href="/rooms/<%= room.id %>" class="list-group-item room-join" id="<%= room.id %>">
+    <span class="room_name">
+        <%= room.name %>
+            </span>
+                <hr>
+                <span class="badge">
+                    <%= room.owner %>
+                </span>
+                <span class="badge">5
+                    <i class="fa fa-child"></i>
+                </span>
+                <% if(room.password == "true") { %> <span class="badge"><i class="fa fa-lock"></i></span> <% } %>
+                    <span class="badge">
+                <% if(room.provider == 'Facebook') { %>
+                    <i class="fa fa-facebook"></i>
+                <% } else if(room.provider == 'Google') { %>
+                    <i class="fa fa-google"></i>
+                <% } else if(room.provider == 'Twitter') { %>
+                    <i class="fa fa-twitter"></i>
+                <% } else { %>
+                  <i class="fa fa-laptop"></i>
+            <% } %>
+        </span>
+    <hr>
+</a>
