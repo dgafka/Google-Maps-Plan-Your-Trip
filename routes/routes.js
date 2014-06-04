@@ -47,6 +47,12 @@ module.exports = function (app, passport) {
         })
     })
 
+    app.get('/rooms/:id', isLogged, function(req, res){
+        var id = req.params.id;
+
+        res.render('googleRoom.ejs', { message: req.flash('message')[0], 'req': req, id: id});
+    })
+
     app.get('/test', function(req, res){
         var roomManagement = require('../modules/RoomManagement');
         var roomHelper     = new roomManagement();

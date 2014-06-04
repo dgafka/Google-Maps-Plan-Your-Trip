@@ -1,0 +1,40 @@
+<% include header.ejs %>
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+    </style>
+
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?language=pl?sensor=true"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src='/js/sockets/GoogleMaps.js'></script>
+    <script type="text/javascript" src='/js/sockets/Chat.js'></script>
+    <script type="text/javascript" src='/js/sockets/googleRoom.js'></script>
+
+
+    <div class="container google-room-chat" id="<%= id %>">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-comment"></span> Chat
+                    </div>
+                    <div class="panel-body">
+                        <ul class="chat" id="chat_box">
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="chat_input" type="text" class="form-control input-sm" placeholder="Message...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-sm" id="message_send">
+                                    Send
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="map-canvas" style='width:100%;height:100%;'/>
+<% include footer.ejs %>

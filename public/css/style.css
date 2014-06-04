@@ -13,6 +13,17 @@ body .rooms .room_name {
 body .rooms hr {
   display: none;
 }
+body .google-room-chat ul {
+  list-style-type: none;
+}
+body .google-room-chat .message .message-nickname {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #2aabd2;
+}
+body .google-room-chat .message .message-nickname:nth-child(2n) {
+  color: #009900 !important;
+}
 @media screen and (min-width: 1000px) {
   body .main-content {
     margin-left: 10%;

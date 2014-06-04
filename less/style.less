@@ -16,16 +16,29 @@ body {
 
   .rooms {
     .room_name {
-//      font-weight: bold;
       text-align: center;
     }
     hr {
       display: none;
     }
     #room_create {
-//      margin-left: 90%
+    }
+  }
+  .google-room-chat {
+    ul {
+      list-style-type: none;
     }
 
+    .message {
+      .message-nickname {
+        text-decoration: underline;
+        font-weight: bold;
+        color: #2aabd2;
+      }
+      .message-nickname:nth-child(2n) {
+        color: #009900 !important;
+      }
+    }
   }
 
   @media screen and (min-width: 1000px) {
@@ -93,5 +106,6 @@ body {
     }
 
   }
+
 
 }

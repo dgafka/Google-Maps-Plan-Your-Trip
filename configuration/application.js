@@ -92,4 +92,7 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
 
     var socketManagment = require('../modules/SocketsRooms');
     var socketManagmentClass = new socketManagment(io.sockets);
+
+    var socketManagmentGoogleRoom = require('../modules/SocketsGoogleRoom');
+    var socketManagmentGoogleRoomClass = new socketManagmentGoogleRoom(io.sockets);
 }

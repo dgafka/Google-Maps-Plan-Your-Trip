@@ -6,10 +6,6 @@ var RoomsClass = function(socket){
         socket.emit('connected', {type: 'rooms'})
     }
 
-    this.roomsReceive = function() {
-
-    }
-
     /**
      * Send information, that room was created.
      */
@@ -27,10 +23,6 @@ var RoomsClass = function(socket){
         }else {
             $('.modal.fade').modal('hide')
         }
-    }
-
-    this.roomJoin  = function(event){
-        /** Send information about room which user joined and removes him from main room lobby */
     }
 
     this.roomRemove = function() {

@@ -42,13 +42,10 @@ module.exports = function(sockets) {
 
         socket.on('connected', function(object){
             socket.join('rooms');
-
             object.socket = socket;
             this.connected(object, function(html){
-//                this.ioSockets.in('rooms').emit('rooms/index', html);
                 socket.emit('rooms/index', html);
             }.bind(this));
-
         }.bind(this))
 
         socket.on('room/create/server', function(room){
