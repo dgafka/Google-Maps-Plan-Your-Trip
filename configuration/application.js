@@ -5,6 +5,10 @@
 //*******************************
 module.exports = function(app, server, express, passport, io, flash, path, less, mongoose) {
 
+    var sessionStore = new express.session.MemoryStore();   /** Memory storage for sessions                                           */
+    var sessionSecret = 'secrect_service_666';              /** Session secret, salt to secure your sessions (Change it on production)*/
+    var sessionKey = 'connect.sid';                         /** Name of the cookies where express stores his session                  */
+
     app.configure(function(){
 
         //*******************************
@@ -12,10 +16,6 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
         // Express configuration
         //
         //*******************************
-
-        var sessionStore = new express.session.MemoryStore();   /** Memory storage for sessions                                           */
-        var sessionSecret = 'secrect_service_666';              /** Session secret, salt to secure your sessions (Change it on production)*/
-        var sessionKey = 'connect.sid';                         /** Name of the cookies where express stores his session                  */
 
         var engine = require('ejs-locals-improved');     /** use ejs-locals for all ejs templates        */
         app.engine('ejs', engine);                       /** view engine ejs for templates               */
@@ -76,16 +76,20 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
     var routes      = require('../routes/routes')(app, passport);                        /**     Routes handler   */
 
     require('./passport')(passport);                                                    /** Passport configuration */
-//    require('./passport_socketio')(io, express, passport, {        /** Passport socket.io authorization */
-//        sessionKey   :  sessionKey,
-//        sessionSecret:  sessionSecret,
-//        sessionStore :  sessionStore
-//    })
+    require('./passport_socketio')(io, express, passport, {                             /** Passport socket.io authorization */
+        sessionKey   :  sessionKey,
+        sessionSecret:  sessionSecret,
+        sessionStore :  sessionStore
+    })
 
-    mongoose.connect('mongodb://localhost/planyourtrip');               /** Connect to mongo server                 */
+    mongoose.connect('mongodb://localhost/planyourtrip');                               /** Connect to mongo server                 */
 
     /** Server starts to listen on port 3000 */
     server.listen(3000, function() {
         console.log("Server has been started at port 3000");
     });
+
+
+    var socketManagment = require('../modules/Sockets');
+    var socketManagmentClass = new socketManagment(io.sockets);
 }

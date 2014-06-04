@@ -13,7 +13,7 @@
         </a>
 
         <% for(var i=0; i<rooms.length; i++) {%>
-            <a href="/rooms/<%= rooms[i].id %>" class="list-group-item" id="<%= rooms[i].id %>">
+            <a href="/rooms/<%= rooms[i].id %>" class="list-group-item room-join" id="<%= rooms[i].id %>">
                 <span class="room_name"><%= rooms[i].name %></span>
                 <hr>
                 <span class="badge"><%= rooms[i].owner %></span>
