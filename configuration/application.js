@@ -90,6 +90,6 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
     });
 
 
-    var socketManagment = require('../modules/Sockets');
+    var socketManagment = require('../modules/SocketsRooms');
     var socketManagmentClass = new socketManagment(io.sockets);
 }

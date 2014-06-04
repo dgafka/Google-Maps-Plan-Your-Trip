@@ -13,8 +13,20 @@ var RoomsClass = function(socket){
     /**
      * Send information, that room was created.
      */
-    this.roomCreate = function(){
+    this.roomCreate = function(results){
         /** Get all rooms data and send it to socket.io server side, then broadcast */
+        results = JSON.parse(results);
+        $('.modal-header-errors').empty();
+
+        if(!(results.type == "success")){
+            results.errorList.forEach(function(result){
+                $('.modal-header-errors').append(
+                    "<div class=\"alert alert-" + results.type + "\">" + result + "</div>"
+                )
+            })
+        }else {
+            $('.modal.fade').modal('hide')
+        }
     }
 
     this.roomJoin  = function(event){

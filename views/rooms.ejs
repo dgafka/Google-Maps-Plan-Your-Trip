@@ -1,7 +1,9 @@
 <% include header.ejs%>
 <script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src='/js/rooms.js'></script>
+<script type="text/javascript" src='/js/sockets/RoomsClass.js'></script>
 <script type="text/javascript" src='/js/sockets/rooms.js'></script>
+<script type="text/javascript" src='/js/rooms.js'></script>
+
 
 <div class="rooms">
     <div class="list-group">
@@ -12,7 +14,7 @@
             </a>
         </a>
         <div id="room_storage">
-
+            <!-- List of rooms -->
         </div>
 
     </div>

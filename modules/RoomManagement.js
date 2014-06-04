@@ -73,6 +73,14 @@ module.exports = function() {
                                 callback(errors);
                             }
                         })
+                        roomModel = {
+                            name        : roomModel.name,
+                            onlineUsers : 0,
+                            owner       : user.username,
+                            password    : roomModel.password == '' ? 'false' : 'true',
+                            id          : roomModel.id,
+                            provider    : user.google.googleId ? 'Google' : (user.facebook.facebookId ? 'Facebook' : (user.twitter.twitterId ? 'Twitter' : 'Local'))
+                        }
                     }
                     if(errors.errorList.length > 0) {
                         callback(errors)

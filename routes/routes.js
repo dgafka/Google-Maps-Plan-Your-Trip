@@ -34,15 +34,16 @@ module.exports = function (app, passport) {
             password: password,
             username: req.user.username
         }, function(results){
-            var results = (typeof results.errorList !== "undefined" && results.errorList.length > 0) ? results : false;
-            if(!results) {
-                results = {
+            var errors = (typeof results.errorList !== "undefined" && results.errorList.length > 0) ? results : false;
+            if(!errors) {
+                errors = {
                     errorList : ['Room has been created.'],
-                    type      : 'success'
+                    type      : 'success',
+                    room      : results
                 }
             }
 
-            return res.json(JSON.stringify(results));
+            return res.json(JSON.stringify(errors));
         })
     })
 
