@@ -25,7 +25,7 @@ module.exports = function(sockets) {
             }
 
             socket.emit('google/initialization', roomData);
-        }.bind(this))
+        }.bind(this));
 
 
         /**
@@ -44,8 +44,8 @@ module.exports = function(sockets) {
             }
             googleRooms[data.roomId].messages.unshift(html);
 
-            this.ioSockets.in(roomId).emit('google/chat/message/receive', html)
-        }.bind(this))
+            this.ioSockets.in(roomId).emit('google/chat/message/receive', html);
+        }.bind(this));
 
 
         socket.on('google/map/zoom/get', function(data){
@@ -54,25 +54,25 @@ module.exports = function(sockets) {
             googleRooms[data.roomId].mapCenter.lng = data.lng;
 
             socket.broadcast.to(data.roomId).emit('google/map/zoom/set', data);
-        })
+        });
 
         socket.on('google/map/center/get', function(data){
             googleRooms[data.roomId].mapCenter.lat = data.lat;
             googleRooms[data.roomId].mapCenter.lng = data.lng;
 
             socket.broadcast.to(data.roomId).emit('google/map/center/set', data);
-        })
+        });
 
         socket.on('google/map/marker/get', function(data){
             var marker = {
                 lat: data.lat,
                 lng: data.lng
-            }
+            };
             googleRooms[data.roomId].markers.push(marker);
 
             socket.broadcast.to(data.roomId).emit('google/map/marker/set', marker);
-        })
+        });
 
-    }.bind(this))
+    }.bind(this));
 
-}
+};

@@ -6,4 +6,4 @@ module.exports = {
     },
     zoom     : 7,
     markers  : []
-}
+};

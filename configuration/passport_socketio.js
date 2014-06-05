@@ -30,4 +30,4 @@ module.exports = function(io, express, passport, option) {
         fail: onAuthorizeFail
     }));
 
-}
+};

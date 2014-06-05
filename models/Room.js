@@ -6,6 +6,6 @@ var roomSchema          = mongoose.Schema({
     password    : String,
     user        : {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 
-})
+});
 
-module.exports = mongoose.model('Room', roomSchema)
+module.exports = mongoose.model('Room', roomSchema);

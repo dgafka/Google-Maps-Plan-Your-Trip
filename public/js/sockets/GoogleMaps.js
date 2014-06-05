@@ -20,7 +20,7 @@ var GoogleMaps = function(socket, roomId){
         googleMap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
         return googleMap;
-    }
+    };
 
 
     /**
@@ -38,7 +38,7 @@ var GoogleMaps = function(socket, roomId){
             lat: mapCenter.lat(),
             lng: mapCenter.lng()
         });
-    }.bind(this)
+    }.bind(this);
 
     /**
      * Sets zoom
@@ -48,7 +48,7 @@ var GoogleMaps = function(socket, roomId){
         googleMap.setZoom(data.zoom);
         var location = new google.maps.LatLng(data.lat, data.lng);
         googleMap.panTo(location);
-    }
+    };
 
     /**
      * Called when drag is end
@@ -61,9 +61,9 @@ var GoogleMaps = function(socket, roomId){
             lat: mapCenter.lat(),
             lng: mapCenter.lng(),
             roomId: roomId
-        }
+        };
         socket.emit('google/map/center/get', mapCenter);
-    }.bind(this)
+    }.bind(this);
 
     /**
      * Seta center of the map
@@ -72,7 +72,7 @@ var GoogleMaps = function(socket, roomId){
     this.onCenterChangedSet     = function(data) {
         var location = new google.maps.LatLng(data.lat, data.lng);
         googleMap.panTo(location);
-    }
+    };
 
     /**
      * Fires when right click on the map
@@ -90,8 +90,8 @@ var GoogleMaps = function(socket, roomId){
                 animation: google.maps.Animation.DROP
             });
 
-        socket.emit('google/map/marker/get', {lat: lat, lng: lng, roomId: roomId})
-    }.bind(this)
+        socket.emit('google/map/marker/get', {lat: lat, lng: lng, roomId: roomId});
+    }.bind(this);
 
     /**
      * Set marker on the map
@@ -104,5 +104,5 @@ var GoogleMaps = function(socket, roomId){
             draggable: true,
             animation: google.maps.Animation.DROP
         });
-    }
-}
+    };
+};

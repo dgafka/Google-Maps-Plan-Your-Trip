@@ -1,7 +1,7 @@
 module.exports = function() {
 
     this.room = require('../models/Room');
-    this.user = require('../models/User')
+    this.user = require('../models/User');
 
 
     /**
@@ -15,16 +15,16 @@ module.exports = function() {
                 var roomDescription = {
                     'name'     : rooms[i].name,
                     'owner'    : rooms[i].user.username,
-                    'password' : rooms[i].password == '' ? 'false' : 'true',
+                    'password' : rooms[i].password === '' ? 'false' : 'true',
                     'id'       : rooms[i].id,
                     'provider' : rooms[i].user.google.googleId ? 'Google' : (rooms[i].user.facebook.facebookId ? 'Facebook' : (rooms[i].user.twitter.twitterId ? 'Twitter' : 'Local'))
-                }
-                roomsDescription.push(roomDescription)
+                };
+                roomsDescription.push(roomDescription);
             }
 
             callback(roomsDescription);
-        })
-    }
+        });
+    };
 
     /**
      * Add new room to database
@@ -72,22 +72,22 @@ module.exports = function() {
                                 errors.errorList.push('Sorry, You can\'t create room, there was an unexpected error.');
                                 callback(errors);
                             }
-                        })
+                        });
                         roomModel = {
                             name        : roomModel.name,
                             onlineUsers : 0,
                             owner       : user.username,
-                            password    : roomModel.password == '' ? 'false' : 'true',
+                            password    : roomModel.password === '' ? 'false' : 'true',
                             id          : roomModel.id,
                             provider    : user.google.googleId ? 'Google' : (user.facebook.facebookId ? 'Facebook' : (user.twitter.twitterId ? 'Twitter' : 'Local'))
-                        }
+                        };
                     }
                     if(errors.errorList.length > 0) {
-                        callback(errors)
+                        callback(errors);
                     }else {
                         callback(roomModel);
                     }
-                })
+                });
             }else {
                 if(errors.errorList.length < 1) {
                     errors.errorList.push('Sorry, You can\'t create room, there was an unexpected error.');
@@ -100,9 +100,9 @@ module.exports = function() {
                 return;
             }
 
-        }.bind(this))
+        }.bind(this));
 
-    }
+    };
 
     /**
      * Removes room from database
@@ -124,16 +124,16 @@ module.exports = function() {
                         if(err) {
                             return console.error(err);
                         }
-                    })
+                    });
                 }
-            })
+            });
         }else if(options.roomName){
             room.remove({name: options.roomName}, function(err){
                 if(err) {
                     return console.error(err);
                 }
-            })
+            });
         }
-    }
+    };
 
-}
+};

@@ -66,7 +66,7 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
         app.use(express.static(path.join(__dirname, '../public')));                            /** Serves static files  */
         app.use(express.static(path.join(__dirname, '../bower_components/jquery/dist')));      /**       --/--          */
         app.use(express.static(path.join(__dirname, '../bower_components/bootstrap/dist')));   /**       --/--          */
-    })
+    });
 
     app.configure('development', function () {                                          /**    Error handling    */
         app.use(express.logger('dev'));
@@ -80,7 +80,7 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
         sessionKey   :  sessionKey,
         sessionSecret:  sessionSecret,
         sessionStore :  sessionStore
-    })
+    });
 
     mongoose.connect('mongodb://localhost/planyourtrip');                               /** Connect to mongo server                 */
 
@@ -95,4 +95,4 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
 
     var socketManagmentGoogleRoom = require('../modules/SocketsGoogleRoom');
     var socketManagmentGoogleRoomClass = new socketManagmentGoogleRoom(io.sockets);
-}
+};

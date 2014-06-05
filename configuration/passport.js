@@ -41,7 +41,7 @@ module.exports = function(passport) {
             var userManager = new userManagment();
             userManager.authenticateUserByEmailPassoword(email, password, function(user){
                 if(user.errorList){
-                    return done(null, false, req.flash('message', user))
+                    return done(null, false, req.flash('message', user));
                 }
 
                 req.flash('message', {
@@ -49,10 +49,10 @@ module.exports = function(passport) {
                     type      : 'success'
                 });
                 return done(null, user);
-            })
+            });
 
-        })
-    }))
+        });
+    }));
 
     /**
      * Facebook strategy for logging via facebook
@@ -71,7 +71,7 @@ module.exports = function(passport) {
                 var facebookId  = profile.id;
                 var password    = profile.id + (Math.random() * 2000);
 
-                var user        = require('../models/User');;
+                var user        = require('../models/User');
 
                 user.findOne({'facebook.facebookId' : facebookId}, function(err, userResults){
                     if(err) {
@@ -92,8 +92,8 @@ module.exports = function(passport) {
                     userModel.save();
 
                     done(null, userModel);
-                })
-            })
+                });
+            });
         }
     ));
 
@@ -118,7 +118,7 @@ module.exports = function(passport) {
                 var googleId    = profile.id;
                 var password    = profile.id + (Math.random() * 2000);
 
-                var user        = require('../models/User');;
+                var user        = require('../models/User');
 
                 user.findOne({'google.googleId' : googleId}, function(err, userResults){
                     if(err) {
@@ -139,8 +139,8 @@ module.exports = function(passport) {
                     userModel.save();
 
                     done(null, userModel);
-                })
-            })
+                });
+            });
         }
     ));
 
@@ -166,7 +166,7 @@ module.exports = function(passport) {
                 var twitterId   = profile.id;
                 var password    = profile.id + (Math.random() * 2000);
 
-                var user        = require('../models/User');;
+                var user        = require('../models/User');
 
                 user.findOne({'twitter.twitterId' : twitterId}, function(err, userResults){
                     if(err) {
@@ -187,8 +187,8 @@ module.exports = function(passport) {
                     userModel.save();
 
                     done(null, userModel);
-                })
-            })
+                });
+            });
 
         })
     );

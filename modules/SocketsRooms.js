@@ -15,7 +15,7 @@ module.exports = function(sockets) {
         if(type == 'rooms') {
             this.connectedRooms(callback);
         }
-    }
+    };
 
 
     /**
@@ -35,7 +35,7 @@ module.exports = function(sockets) {
             }
             callback(html);
         }.bind(this));
-    }
+    };
 
 
     this.ioSockets.on('connection', function(socket){
@@ -46,7 +46,7 @@ module.exports = function(sockets) {
             this.connected(object, function(html){
                 socket.emit('rooms/index', html);
             }.bind(this));
-        }.bind(this))
+        }.bind(this));
 
         socket.on('room/create/server', function(room){
             var roomManagement = require('../modules/RoomManagement');
@@ -66,7 +66,7 @@ module.exports = function(sockets) {
                         errorList : ['Room has been created.'],
                         type      : 'success',
                         room      : results
-                    }
+                    };
                 }
                 if(typeof errors.room === "undefined") {
                     socket.emit('rooms/create/client', JSON.stringify(errors));
@@ -75,11 +75,11 @@ module.exports = function(sockets) {
                     var html     = ejs.render(ejsTemplate, {room: errors.room});
 
                     this.ioSockets.in('rooms').emit('rooms/index', html);
-                    socket.emit('rooms/create/client', JSON.stringify(errors))
+                    socket.emit('rooms/create/client', JSON.stringify(errors));
                 }
-            }.bind(this))
-        }.bind(this))
+            }.bind(this));
+        }.bind(this));
 
-    }.bind(this))
+    }.bind(this));
 
-}
+};

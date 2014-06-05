@@ -15,7 +15,7 @@ module.exports = function() {
         var user   = new this.userSchema();
 
         if(options.email.length < 3 || !this.emailValidation(options.email)) {
-            errors.errorList.push('Email is wrong.')
+            errors.errorList.push('Email is wrong.');
         }
         if(options.password.length < 6) {
             errors.errorList.push('Password is to short, it should contains atleast 6 letters.');
@@ -56,8 +56,8 @@ module.exports = function() {
                 errors.errorList.push('Registered successfully');
                 callback(errors);
             });
-        })
-    }
+        });
+    };
 
     /**
      * Find user by email and password
@@ -89,9 +89,9 @@ module.exports = function() {
 
             errors.errorList.push('Wrong password.');
             callback(errors);
-        })
+        });
 
-    }
+    };
 
     /**
      * Returns user schema
@@ -99,7 +99,7 @@ module.exports = function() {
      */
     this.getUserSchema = function() {
         return this.userSchema;
-    }
+    };
 
     /**
      * Email validator
@@ -109,10 +109,10 @@ module.exports = function() {
     this.emailValidation   = function(email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
-    }
+    };
 
     this.usernameValidation = function(username){
-        return (!/[^a-zA-Z0-9]/.test(username))
-    }
+        return (!/[^a-zA-Z0-9]/.test(username));
+    };
 
-}
+};

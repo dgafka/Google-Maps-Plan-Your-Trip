@@ -6,8 +6,8 @@ var Chat = function(socket){
         var messages = data.messages.reverse();
         data.messages.forEach(function(message){
             this.receiveMessage(message);
-        }.bind(this))
-    }
+        }.bind(this));
+    };
 
     /**
      * Send message to clients in room
@@ -21,13 +21,13 @@ var Chat = function(socket){
         var data = {
             roomId : roomId,
             message: message
-        }
+        };
 
         socket.emit('google/chat/message/send', data);
         //Prevent submiting the form
         input.val('');
         event.preventDefault();
-    }
+    };
 
     /**
      * Recieves messages from clients
@@ -35,6 +35,6 @@ var Chat = function(socket){
      */
     this.receiveMessage = function(data) {
         $('#chat_box').append(data);
-    }
+    };
 
-}
+};

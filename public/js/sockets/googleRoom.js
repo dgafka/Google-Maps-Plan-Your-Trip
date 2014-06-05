@@ -24,24 +24,24 @@ $(document).ready(function(){
 
         data.markers.forEach(function(marker){
             mapsManagement.onRightClickSet(marker);
-        }.bind(this))
+        }.bind(this));
         //inicjalna data, tworzenie mapy zapendowanie messaegow
-    })
+    });
 
     /**
      * Called when message is received message
      */
     socket.on('google/chat/message/receive', function(data){
         chatManagement.receiveMessage(data);
-    })
+    });
 
     /**
      * Set zoom
      */
     socket.on('google/map/zoom/set', function(data){
-        google.maps.event.removeListener(mapListeners['zoom_changed']);
+        google.maps.event.removeListener(mapListeners.zoom_changed);
         mapsManagement.onZoomChangedSet(data);
-        mapListeners['zoom_changed'] = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onCenterChangedGet);
+        mapListeners.zoom_changed = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onCenterChangedGet);
     });
 
     /**
@@ -52,7 +52,7 @@ $(document).ready(function(){
     }.bind(this));
 
 
-    socket.on('google/map/marker/set', mapsManagement.onRightClickSet)
+    socket.on('google/map/marker/set', mapsManagement.onRightClickSet);
 
     //
     // DOM EVENTS
@@ -72,13 +72,13 @@ $(document).ready(function(){
     //GOOGLE MAPS EVENTS
     //
     var addGoogleMapsEvents = function() {
-        mapListeners['zoom_changed'] = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onZoomChangedGet);
-        mapListeners['dragend']      = google.maps.event.addListener(map, 'dragend', mapsManagement.onCenterChangedGet);
-        mapListeners['rightclick']   = google.maps.event.addListener(map, 'rightclick', mapsManagement.onRightClickGet);
+        mapListeners.zoom_changed = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onZoomChangedGet);
+        mapListeners.dragend      = google.maps.event.addListener(map, 'dragend', mapsManagement.onCenterChangedGet);
+        mapListeners.rightclick   = google.maps.event.addListener(map, 'rightclick', mapsManagement.onRightClickGet);
         google.maps.event.addDomListener(window, "resize", function() {
             var center = map.getCenter();
             google.maps.event.trigger(map, "resize");
             map.setCenter(center);
         });
-    }
-})
+    };
+});

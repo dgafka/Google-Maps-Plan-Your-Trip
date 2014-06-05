@@ -5,7 +5,7 @@ module.exports = function (app, passport) {
      */
     app.get('/', function(req, res) {
         res.render('index.ejs', { message: req.flash('message')[0], 'req': req});
-    })
+    });
 
     /**
      * Route for rooms
@@ -18,9 +18,9 @@ module.exports = function (app, passport) {
             for(var i=0; i<rooms.length; i++){
                 rooms[i].onlineUsers = 0;
             }
-            res.render('rooms.ejs', { message: req.flash('message')[0], 'req': req, rooms: rooms})
+            res.render('rooms.ejs', { message: req.flash('message')[0], 'req': req, rooms: rooms});
         });
-    })
+    });
 
     app.post('/rooms/create', isLogged, function(req, res){
         var roomManagement = require('../modules/RoomManagement');
@@ -40,18 +40,18 @@ module.exports = function (app, passport) {
                     errorList : ['Room has been created.'],
                     type      : 'success',
                     room      : results
-                }
+                };
             }
 
             return res.json(JSON.stringify(errors));
-        })
-    })
+        });
+    });
 
     app.get('/rooms/:id', isLogged, function(req, res){
         var id = req.params.id;
 
         res.render('googleRoom.ejs', { message: req.flash('message')[0], 'req': req, id: id});
-    })
+    });
 
     app.get('/test', function(req, res){
         var roomManagement = require('../modules/RoomManagement');
@@ -66,14 +66,14 @@ module.exports = function (app, passport) {
         roomHelper.index(function(rooms){
             console.log(rooms);
         });
-    })
+    });
 
     /**
      * Route to register form
      */
     app.get('/signup', isLoggedOff, function(req, res){
         res.render('signup.ejs', { message: req.flash('message')[0], 'req': req});
-    })
+    });
 
     /**
      * Route for register submit
@@ -92,15 +92,15 @@ module.exports = function (app, passport) {
            }
            req.flash('message', errors);
            return res.redirect('/');
-       })
-   })
+       });
+   });
 
     /**
      * Route for login form
      */
     app.get('/login', isLoggedOff, function(req, res){
-        res.render('login.ejs', {message: req.flash('message')[0], 'req': req})
-    })
+        res.render('login.ejs', {message: req.flash('message')[0], 'req': req});
+    });
 
     /**
      * Route for login submit
@@ -109,7 +109,7 @@ module.exports = function (app, passport) {
         successRedirect : '/',       /** redirect to main page with session on */
         failureRedirect : '/login', /** redirect to sign up, if fails         */
         failureFlash : true          /** allow flash messages                  */
-    }))
+    }));
 
 
     /**
@@ -165,7 +165,7 @@ module.exports = function (app, passport) {
     app.get('/logout', function(req, res){
         req.logout();
         res.redirect('/');
-    })
+    });
 
     /**
      * Checks if user is logged in

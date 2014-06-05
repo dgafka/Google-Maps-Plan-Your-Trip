@@ -18,7 +18,7 @@ var userSchema          = mongoose.Schema({
         token       : String,
         twitterId   : String
     }
-})
+});
 
 /** generating a hash */
 userSchema.methods.generateHash = function(password) {
@@ -28,6 +28,6 @@ userSchema.methods.generateHash = function(password) {
 /** checking if password is valid */
 userSchema.methods.validPassword = function(passwordSource, passwordTypedByUser) {
     return bcrypt.compareSync(passwordTypedByUser, passwordSource);
-}
+};
 
 module.exports = mongoose.model('User', userSchema);
