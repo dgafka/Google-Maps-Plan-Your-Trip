@@ -16,7 +16,7 @@ $(document).ready(function(){
     socket.on('rooms/create/client', roomsManagement.roomCreate)
 
     /** Send information about room which user joined and removes him from main room lobby */
-    $('.room-join').on('click', roomsManagement.roomJoin)
+    $('#room_storage a').on('click', roomsManagement.roomJoin)
 
 
     $('#room_create_submit').on('click', function(event){

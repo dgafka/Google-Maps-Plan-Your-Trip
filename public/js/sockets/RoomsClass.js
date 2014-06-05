@@ -25,6 +25,11 @@ var RoomsClass = function(socket){
         }
     }
 
+    this.roomJoin = function(event){
+        console.log('a');
+        event.preventDefault();
+    }
+
     this.roomRemove = function() {
         /** Send information, that room was destroyed and removes everyone from inside of room lobby */
     }

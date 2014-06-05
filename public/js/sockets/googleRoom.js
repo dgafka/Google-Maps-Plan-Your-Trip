@@ -3,7 +3,7 @@ var map;
 var mapListeners = [];
 
 $(document).ready(function(){
-    var roomId = $('.container.google-room-chat').attr('id');
+    var roomId = $('.google-room-chat').attr('id');
     var chatManagement = new Chat(socket);
     var mapsManagement = new GoogleMaps(socket, roomId);
 
