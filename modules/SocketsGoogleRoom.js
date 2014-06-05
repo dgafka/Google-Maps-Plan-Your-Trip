@@ -16,15 +16,21 @@ module.exports = function(sockets) {
          */
         socket.on('google/connected', function(object){
 
-            var rooms = this.ioSockets.manager.roomClients[socket.id];
+            var roomId  = object.roomId;
 
             socket.join(object.roomId);
             var roomData = require('../models/GoogleRoom');
-            if(!googleRooms.hasOwnProperty(object.roomId)){
-                roomData.id                = object.roomId;
-                googleRooms[object.roomId] = roomData;
-            }else {
-                roomData = googleRooms[object.roomId];
+            var found    = false;
+            googleRooms.forEach(function(room){
+                if(object.roomId == room.id){
+                   roomData = googleRooms[roomId];
+                   found    = true;
+                }
+            });
+
+            if(!found) {
+                roomData.id = roomId;
+                googleRooms[roomId] = roomData;
             }
 
             socket.emit('google/initialization', roomData);
@@ -52,16 +58,18 @@ module.exports = function(sockets) {
 
 
         socket.on('google/map/zoom/get', function(data){
-            googleRooms[data.roomId].zoom = data.zoom;
-            googleRooms[data.roomId].mapCenter.lat = data.lat;
-            googleRooms[data.roomId].mapCenter.lng = data.lng;
+            var object = googleRooms[data.roomId];
+            object.zoom = data.zoom;
+            object.mapCenter.lat = data.lat;
+            object.mapCenter.lng = data.lng;
 
             socket.broadcast.to(data.roomId).emit('google/map/zoom/set', data);
         });
 
         socket.on('google/map/center/get', function(data){
-            googleRooms[data.roomId].mapCenter.lat = data.lat;
-            googleRooms[data.roomId].mapCenter.lng = data.lng;
+            var object = googleRooms[data.roomId];
+            object.mapCenter.lat = data.lat;
+            object.mapCenter.lng = data.lng;
 
             socket.broadcast.to(data.roomId).emit('google/map/center/set', data);
         });
@@ -71,7 +79,8 @@ module.exports = function(sockets) {
                 lat: data.lat,
                 lng: data.lng
             };
-            googleRooms[data.roomId].markers.push(marker);
+            var object = googleRooms[data.roomId];
+            object.markers.push(marker);
 
             socket.broadcast.to(data.roomId).emit('google/map/marker/set', marker);
         });

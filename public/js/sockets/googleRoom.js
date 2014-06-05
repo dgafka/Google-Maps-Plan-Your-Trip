@@ -1,4 +1,4 @@
-var socket      = io.connect('http://192.168.0.197:3000');
+var socket      = io.connect('http://' + location.host);
 var map;
 var mapListeners = [];
 
