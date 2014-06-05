@@ -4,7 +4,7 @@ body .jumbotron.text-center .authorization-type {
 body .main-content {
   text-align: center !important;
 }
-body .main-content .col-md-4 button {
+body .main-content .col-md-4 a {
   width: 200px;
 }
 body .rooms .room_name {
@@ -13,8 +13,18 @@ body .rooms .room_name {
 body .rooms hr {
   display: none;
 }
-body .google-room-chat ul {
+body .google-room-chat {
+  float: left;
+  width: 20%;
+  word-wrap: break-word;
+  margin-top: -20px;
+}
+body .google-room-chat .chat {
   list-style-type: none;
+  margin-left: -30px;
+  display: block;
+  overflow-y: scroll;
+  height: 80%;
 }
 body .google-room-chat .message .message-nickname {
   text-decoration: underline;
@@ -23,6 +33,15 @@ body .google-room-chat .message .message-nickname {
 }
 body .google-room-chat .message .message-nickname:nth-child(2n) {
   color: #009900 !important;
+}
+body #map-canvas {
+  float: right;
+  margin-top: -20px;
+  width: 80% !important;
+  height: 90% !important;
+}
+body .chat-helper {
+  display: none;
 }
 @media screen and (min-width: 1000px) {
   body .main-content {
@@ -34,8 +53,16 @@ body .google-room-chat .message .message-nickname:nth-child(2n) {
     text-align: center;
     margin-left: 30%;
   }
-  body .main-content .col-md-4 button {
+  body .main-content .col-md-4 a {
     width: 200px;
+  }
+}
+@media screen and (max-width: 800px) {
+  body .google-room-chat {
+    width: 30% !important;
+  }
+  body #map-canvas {
+    width: 70% !important;
   }
 }
 @media screen and (max-width: 550px) {
@@ -49,7 +76,7 @@ body .google-room-chat .message .message-nickname:nth-child(2n) {
     margin-left: 10%;
     text-align: center;
   }
-  body .main-content .col-md-4 button {
+  body .main-content .col-md-4 a {
     width: 180%;
     font-size: 10px !important;
   }
@@ -60,6 +87,12 @@ body .google-room-chat .message .message-nickname:nth-child(2n) {
     border: 0;
     border-bottom: 1px solid #fff;
   }
+  body .google-room-chat {
+    display: none;
+  }
+  body #map-canvas {
+    width: 100% !important;
+  }
 }
 @media screen and (max-width: 350px) {
   body p {
@@ -68,10 +101,10 @@ body .google-room-chat .message .message-nickname:nth-child(2n) {
   body .main-content .col-md-4 {
     margin-left: -10%;
   }
-  body .main-content .col-md-4 button {
+  body .main-content .col-md-4 a {
     width: 150px;
   }
-  body .jumbotron.text-center button {
+  body .jumbotron.text-center a {
     margin-left: -5%;
   }
 }

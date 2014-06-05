@@ -11,7 +11,7 @@
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-4">
-                                        <button class="btn btn-primary" id="register_locally">
+                                        <a href="/signup" class="btn btn-primary" id="register_locally">
                                             <div class="row">
                                                 <div class="col-xs-6 col-sm-4">
                                                     <i class="fa fa-male fa-4x"></i>
@@ -20,14 +20,14 @@
                                                     <span class="authorization-type">Register<br/>Locally</span>
                                                 </div>
                                             </div>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-4">
-                                        <button class="btn btn-primary" id="login_locally">
+                                        <a href="/login" class="btn btn-primary" id="login_locally">
                                             <div class="row">
                                                 <div class="col-xs-6 col-sm-4">
                                                     <i class="fa fa-share-alt-square fa-4x"></i>
@@ -36,23 +36,7 @@
                                                     <span class="authorization-type">Login <br/>Locally</span>
                                                 </div>
                                             </div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-4">
-                                        <button class="btn btn-primary" id="anonymous_locally">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4">
-                                                    <i class="fa fa-share-square fa-4x"></i>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-4">
-                                                    <span class="authorization-type">Anonymous <br/>Locally</span>
-                                                </div>
-                                            </div>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +45,7 @@
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-4">
-                                        <button class="btn btn-primary" id="login_twitter">
+                                        <a href="/auth/twitter/callback" class="btn btn-primary" id="login_twitter">
                                             <div class="row">
                                                 <div class="col-xs-6 col-sm-4">
                                                     <i class="fa fa-twitter-square fa-4x"></i>
@@ -70,14 +54,14 @@
                                                     <span class="authorization-type">Twitter</span>
                                                 </div>
                                             </div>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-4">
-                                        <button class="btn btn-primary" id="login_facebook">
+                                        <a href="/auth/facebook/callback" class="btn btn-primary" id="login_facebook">
                                             <div class="row">
                                                 <div class="col-xs-6 col-sm-4">
                                                     <i class="fa fa-facebook-square fa-4x"></i>
@@ -86,14 +70,14 @@
                                                     <span class="authorization-type">Facebook</span>
                                                 </div>
                                             </div>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-4">
-                                    <button class="btn btn-primary" id="login_google">
+                                    <a href="auth/google/callback" class="btn btn-primary" id="login_google">
                                         <div class="row">
                                             <div class="col-xs-6 col-sm-4">
                                                 <i class="fa fa-google-plus-square fa-4x"></i>
@@ -102,7 +86,7 @@
                                                 <span class="authorization-type">Google</span>
                                             </div>
                                         </div>
-                                    </button>
+                                    </a>
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +97,7 @@
         <% } else { %>
             <div class="jumbotron text-center">
                 <p>Hello, <%= req.user.email %>.</p>
-                <button class="btn btn-info" style="width: 200px;" id="chat_room"><i class="fa fa-comments fa-3x"></i> Join Rooms</button>
+                <a href="/rooms" class="btn btn-info" style="width: 200px;" id="chat_room"><i class="fa fa-comments fa-3x"></i> Join Lobby</a>
             </div>
         <% } %>
 <% include footer.ejs %>

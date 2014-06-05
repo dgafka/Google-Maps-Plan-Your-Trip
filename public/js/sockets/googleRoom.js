@@ -18,6 +18,7 @@ $(document).ready(function(){
      * initalization of chat and map
      */
     socket.on('google/initialization', function(data){
+        chatManagement.initalize(data);
         map = mapsManagement.initalize(data);
         addGoogleMapsEvents(map);
         //inicjalna data, tworzenie mapy zapendowanie messaegow
@@ -48,7 +49,14 @@ $(document).ready(function(){
     //
     $('#message_send').on("click", function(event){
         chatManagement.sendMessage(roomId);
+        $('#chat_input').val('');
     }.bind(this));
+
+    $('#chat_input').keypress(function(e) {
+        if(e.which == 13) {
+            chatManagement.sendMessage(roomId);
+        }
+    });
 
     //
     //GOOGLE MAPS EVENTS

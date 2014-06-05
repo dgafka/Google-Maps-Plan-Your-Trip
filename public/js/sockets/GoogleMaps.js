@@ -10,9 +10,9 @@ var GoogleMaps = function(socket, roomId){
             center: new google.maps.LatLng(data.mapCenter.lat, data.mapCenter.lng),
             zoom: data.zoom,
             navigationControl: true,
-            panControl: true,
+            panControl: false,
             zoomControl: true,
-            streetViewControl: true,
+            streetViewControl: false,
             scaleControl: true,
             rotateControl: true,
             overviewMapControl: true

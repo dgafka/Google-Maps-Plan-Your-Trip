@@ -39,10 +39,10 @@ module.exports = function(sockets) {
             var ejsTemplate = fs.readFileSync(__dirname + '/../views/message_template.ejs', 'utf8');
             var html        = ejs.render(ejsTemplate, {username: username, message: message});
 
-            while(googleRooms[data.roomId].messages.length > 10) {
+            while(googleRooms[data.roomId].messages.length > 6) {
                 googleRooms[data.roomId].messages.shift();
             }
-            googleRooms[data.roomId].messages.unshift({username : username, message: message});
+            googleRooms[data.roomId].messages.unshift(html);
 
             this.ioSockets.in(roomId).emit('google/chat/message/receive', html)
         }.bind(this))

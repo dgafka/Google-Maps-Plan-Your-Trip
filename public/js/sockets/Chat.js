@@ -2,13 +2,21 @@ var Chat = function(socket){
 
     this.socket = socket;
 
+    this.initalize = function(data) {
+        var messages = data.messages.reverse();
+        data.messages.forEach(function(message){
+            this.receiveMessage(message);
+        }.bind(this))
+    }
+
     /**
      * Send message to clients in room
      * @param message
      */
     this.sendMessage = function(roomId){
         //Manipulate data
-        var message = $('#chat_input').val();
+        var input   = $('#chat_input');
+        var message = input.val();
 
         var data = {
             roomId : roomId,
@@ -17,6 +25,7 @@ var Chat = function(socket){
 
         socket.emit('google/chat/message/send', data);
         //Prevent submiting the form
+        input.val('');
         event.preventDefault();
     }
 
