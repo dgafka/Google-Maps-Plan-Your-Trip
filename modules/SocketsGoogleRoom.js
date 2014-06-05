@@ -67,9 +67,8 @@ module.exports = function(sockets) {
         socket.on('google/map/zoom/get', function(data){
             var object = googleRooms[data.roomId];
             object.zoom = data.zoom;
-            object.mapCenter.lat = data.lat;
-            object.mapCenter.lng = data.lng;
 
+            data = data.zoom;
             socket.broadcast.to(data.roomId).emit('google/map/zoom/set', data);
         });
 
