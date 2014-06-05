@@ -11,15 +11,7 @@ module.exports = function (app, passport) {
      * Route for rooms
      */
     app.get('/rooms', isLogged, function(req, res){
-        var roomManagement = require('../modules/RoomManagement');
-        var roomHelper     = new roomManagement();
-
-        roomHelper.index(function(rooms){
-            for(var i=0; i<rooms.length; i++){
-                rooms[i].onlineUsers = 0;
-            }
-            res.render('rooms.ejs', { message: req.flash('message')[0], 'req': req, rooms: rooms});
-        });
+        res.render('rooms.ejs', { message: req.flash('message')[0], 'req': req});
     });
 
     app.post('/rooms/create', isLogged, function(req, res){
@@ -51,21 +43,6 @@ module.exports = function (app, passport) {
         var id = req.params.id;
 
         res.render('googleRoom.ejs', { message: req.flash('message')[0], 'req': req, id: id});
-    });
-
-    app.get('/test', function(req, res){
-        var roomManagement = require('../modules/RoomManagement');
-        var roomHelper     = new roomManagement();
-//        roomHelper.addRoom({username : 'daro', password: 'test2', roomName: 'testowy pokoj'}, function(room){
-//            console.log(room);
-//        })
-//
-//        roomHelper.removeRoom({username: 'Dariusz Gafka'})
-//        roomHelper.removeRoom({roomName: 'testowy pokoj2'})
-
-        roomHelper.index(function(rooms){
-            console.log(rooms);
-        });
     });
 
     /**

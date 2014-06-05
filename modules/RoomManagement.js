@@ -127,12 +127,6 @@ module.exports = function() {
                     });
                 }
             });
-        }else if(options.roomName){
-            room.remove({name: options.roomName}, function(err){
-                if(err) {
-                    return console.error(err);
-                }
-            });
         }
     };
 

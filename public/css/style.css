@@ -46,6 +46,9 @@ body #map-canvas {
 body .chat-helper {
   display: none;
 }
+body .rooms-remove:hover {
+  background-color: #0000ed;
+}
 @media screen and (min-width: 1000px) {
   body .main-content {
     margin-left: 10%;

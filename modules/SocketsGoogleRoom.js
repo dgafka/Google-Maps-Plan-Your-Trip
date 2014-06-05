@@ -16,9 +16,12 @@ module.exports = function(sockets) {
          */
         socket.on('google/connected', function(object){
 
+            var rooms = this.ioSockets.manager.roomClients[socket.id];
+
             socket.join(object.roomId);
             var roomData = require('../models/GoogleRoom');
             if(!googleRooms.hasOwnProperty(object.roomId)){
+                roomData.id                = object.roomId;
                 googleRooms[object.roomId] = roomData;
             }else {
                 roomData = googleRooms[object.roomId];

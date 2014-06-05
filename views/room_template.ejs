@@ -19,7 +19,22 @@
                     <i class="fa fa-twitter"></i>
                 <% } else { %>
                   <i class="fa fa-laptop"></i>
-            <% } %>
-        </span>
+                <% } %>
+                </span>
+                <% if(room.owner == loggedUser) { %>
+                    <span class="badge rooms-remove" data-id="<%= room.id %>">
+                        <i class="fa fa-arrow-down"></i>Remove
+                    </span>
+                <% } %>
     <hr>
 </a>
+<script>
+    $('.rooms-remove').on('click', function(event){
+        var roomsManagement = new RoomsClass(socket);
+        var roomId = $(this).attr('data-id');
+        roomsManagement.roomRemove(roomId);
+        $('span[data-id="' + roomId + '"]').parent().remove();
+
+        event.preventDefault();
+    })
+</script>

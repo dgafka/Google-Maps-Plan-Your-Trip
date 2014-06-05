@@ -1,4 +1,5 @@
 module.exports = {
+    id       : String,
     messages : [],
     mapCenter: {
         lat: 52.06600028274564,

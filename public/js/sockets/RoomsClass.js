@@ -30,8 +30,8 @@ var RoomsClass = function(socket){
         event.preventDefault();
     };
 
-    this.roomRemove = function() {
-        /** Send information, that room was destroyed and removes everyone from inside of room lobby */
+    this.roomRemove = function(id) {
+        socket.emit('room/remove', id);
     };
 
 

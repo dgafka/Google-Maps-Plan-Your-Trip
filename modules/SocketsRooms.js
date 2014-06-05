@@ -13,7 +13,7 @@ module.exports = function(sockets) {
     this.connected = function(options, callback){
         var type = options.type;
         if(type == 'rooms') {
-            this.connectedRooms(callback);
+            this.connectedRooms(callback, options.socket);
         }
     };
 
@@ -22,7 +22,7 @@ module.exports = function(sockets) {
      * Get all rooms with html template
      * @param callback
      */
-    this.connectedRooms = function(callback) {
+    this.connectedRooms = function(callback, socket) {
         var roomManagement = require('../modules/RoomManagement');
         var roomHelper     = new roomManagement();
 
@@ -31,7 +31,7 @@ module.exports = function(sockets) {
             for(var i=0; i<rooms.length; i++){
                 rooms[i].onlineUsers = (this.ioSockets.clients(rooms[i].id)).length;
                 var ejsTemplate = fs.readFileSync(__dirname + '/../views/room_template.ejs', 'utf8');
-                html            += ejs.render(ejsTemplate, {room: rooms[i]});
+                html            += ejs.render(ejsTemplate, {room: rooms[i], loggedUser: socket.handshake.user.username});
             }
             callback(html);
         }.bind(this));
@@ -72,13 +72,24 @@ module.exports = function(sockets) {
                     socket.emit('rooms/create/client', JSON.stringify(errors));
                 }else {
                     var ejsTemplate = fs.readFileSync(__dirname + '/../views/room_template.ejs', 'utf8');
-                    var html     = ejs.render(ejsTemplate, {room: errors.room});
+                    var html     = ejs.render(ejsTemplate, {room: errors.room, loggedUser: errors.room.owner});
 
                     this.ioSockets.in('rooms').emit('rooms/index', html);
                     socket.emit('rooms/create/client', JSON.stringify(errors));
                 }
             }.bind(this));
         }.bind(this));
+
+        socket.on('room/remove', function(id){
+            var roomManagement = require('../modules/RoomManagement');
+            var roomHelper     = new roomManagement();
+
+            var object = {
+                username: socket.handshake.user.username,
+                id      : id
+            }
+            roomHelper.removeRoom(object);
+        })
 
     }.bind(this));
 
