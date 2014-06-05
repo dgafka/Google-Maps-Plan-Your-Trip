@@ -18,6 +18,7 @@ var GoogleMaps = function(socket, roomId){
             overviewMapControl: true
         };
         googleMap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
         return googleMap;
     }
 
@@ -30,6 +31,7 @@ var GoogleMaps = function(socket, roomId){
         var zoom = googleMap.getZoom();
         var mapCenter = googleMap.getCenter();
         var roomId = this.roomId;
+
         socket.emit('google/map/zoom/get', {
             zoom: zoom,
             roomId: roomId,
@@ -70,5 +72,37 @@ var GoogleMaps = function(socket, roomId){
     this.onCenterChangedSet     = function(data) {
         var location = new google.maps.LatLng(data.lat, data.lng);
         googleMap.panTo(location);
+    }
+
+    /**
+     * Fires when right click on the map
+     * @param event
+     */
+    this.onRightClickGet = function(event){
+        var lat = event.latLng.lat();
+        var lng = event.latLng.lng();
+        var roomId    = this.roomId;
+
+        new google.maps.Marker({
+                position: {lat: lat, lng: lng},
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP
+            });
+
+        socket.emit('google/map/marker/get', {lat: lat, lng: lng, roomId: roomId})
+    }.bind(this)
+
+    /**
+     * Set marker on the map
+     * @param data
+     */
+    this.onRightClickSet = function(data) {
+        new google.maps.Marker({
+            position: {lat: data.lat, lng: data.lng},
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP
+        });
     }
 }

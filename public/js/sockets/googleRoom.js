@@ -21,6 +21,10 @@ $(document).ready(function(){
         chatManagement.initalize(data);
         map = mapsManagement.initalize(data);
         addGoogleMapsEvents(map);
+
+        data.markers.forEach(function(marker){
+            mapsManagement.onRightClickSet(marker);
+        }.bind(this))
         //inicjalna data, tworzenie mapy zapendowanie messaegow
     })
 
@@ -32,7 +36,7 @@ $(document).ready(function(){
     })
 
     /**
-     * Set center
+     * Set zoom
      */
     socket.on('google/map/zoom/set', function(data){
         google.maps.event.removeListener(mapListeners['zoom_changed']);
@@ -40,9 +44,15 @@ $(document).ready(function(){
         mapListeners['zoom_changed'] = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onCenterChangedGet);
     });
 
+    /**
+     * Set center of the mpa
+     */
     socket.on('google/map/center/set', function(data){
         mapsManagement.onCenterChangedSet(data);
     }.bind(this));
+
+
+    socket.on('google/map/marker/set', mapsManagement.onRightClickSet)
 
     //
     // DOM EVENTS
@@ -64,6 +74,7 @@ $(document).ready(function(){
     var addGoogleMapsEvents = function() {
         mapListeners['zoom_changed'] = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onZoomChangedGet);
         mapListeners['dragend']      = google.maps.event.addListener(map, 'dragend', mapsManagement.onCenterChangedGet);
+        mapListeners['rightclick']   = google.maps.event.addListener(map, 'rightclick', mapsManagement.onRightClickGet);
         google.maps.event.addDomListener(window, "resize", function() {
             var center = map.getCenter();
             google.maps.event.trigger(map, "resize");

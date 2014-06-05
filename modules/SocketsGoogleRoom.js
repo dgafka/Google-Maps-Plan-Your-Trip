@@ -63,6 +63,16 @@ module.exports = function(sockets) {
             socket.broadcast.to(data.roomId).emit('google/map/center/set', data);
         })
 
+        socket.on('google/map/marker/get', function(data){
+            var marker = {
+                lat: data.lat,
+                lng: data.lng
+            }
+            googleRooms[data.roomId].markers.push(marker);
+
+            socket.broadcast.to(data.roomId).emit('google/map/marker/set', marker);
+        })
+
     }.bind(this))
 
 }
