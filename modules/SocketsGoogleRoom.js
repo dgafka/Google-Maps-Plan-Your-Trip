@@ -19,14 +19,21 @@ module.exports = function(sockets) {
             var roomId  = object.roomId;
 
             socket.join(object.roomId);
-            var roomData = require('../models/GoogleRoom');
+            var roomData = {
+                id       : roomId,
+                messages : [],
+                mapCenter: {
+                    lat: 52.06600028274564,
+                    lng: 19.35791015625
+                },
+                zoom     : 7,
+                markers  : []
+            };
             var found    = false;
-            googleRooms.forEach(function(room){
-                if(object.roomId == room.id){
-                   roomData = googleRooms[roomId];
-                   found    = true;
-                }
-            });
+            if(googleRooms.hasOwnProperty(object.roomId)){
+                roomData = googleRooms[roomId];
+                found    = true;
+            }
 
             if(!found) {
                 roomData.id = roomId;
