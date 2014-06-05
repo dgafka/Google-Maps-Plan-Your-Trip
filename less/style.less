@@ -1,4 +1,10 @@
 body {
+
+  .hidden-display {
+    display: none;
+  }
+
+
   .jumbotron.text-center {
       .authorization-type {
         font-weight: bold;
@@ -99,7 +105,15 @@ body {
     #map-canvas {
       width: 70% !important;
     }
+
   }
+
+  @media screen and (min-width: 550px){
+    #chatHideVisible {
+      display: none;
+    }
+  }
+
 
   @media screen and (max-width: 550px){
     font-size: 12px;
@@ -128,11 +142,16 @@ body {
     }
 
     .google-room-chat {
-      display: none;
+      z-index: 9999;
+      width: 100% !important;
     }
 
     #map-canvas {
       width: 100% !important;
+    }
+
+    .hidden-display-chat {
+      display: none;
     }
   }
 

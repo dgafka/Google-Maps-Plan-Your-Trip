@@ -1,3 +1,6 @@
+body .hidden-display {
+  display: none;
+}
 body .jumbotron.text-center .authorization-type {
   font-weight: bold;
 }
@@ -65,6 +68,11 @@ body .chat-helper {
     width: 70% !important;
   }
 }
+@media screen and (min-width: 550px) {
+  body #chatHideVisible {
+    display: none;
+  }
+}
 @media screen and (max-width: 550px) {
   body {
     font-size: 12px;
@@ -88,10 +96,14 @@ body .chat-helper {
     border-bottom: 1px solid #fff;
   }
   body .google-room-chat {
-    display: none;
+    z-index: 9999;
+    width: 100% !important;
   }
   body #map-canvas {
     width: 100% !important;
+  }
+  body .hidden-display-chat {
+    display: none;
   }
 }
 @media screen and (max-width: 350px) {

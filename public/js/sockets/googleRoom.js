@@ -68,6 +68,11 @@ $(document).ready(function(){
         }
     });
 
+    $('#chatHideVisible').on("click", function(event){
+        $('.google-room-chat').toggleClass('hidden-display-chat');
+        $('#map-canvas').toggleClass('hidden-display');
+    });
+
     //
     //GOOGLE MAPS EVENTS
     //

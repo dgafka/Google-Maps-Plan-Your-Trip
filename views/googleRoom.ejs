@@ -4,13 +4,15 @@
         body { height: 100%; margin: 0; padding: 0 }
     </style>
 
+    <div class="btn btn-primary" style="position:absolute;z-index:99999;top:50%;" id="chatHideVisible">Chat</div>
+
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?language=pl?sensor=true"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src='/js/sockets/GoogleMaps.js'></script>
     <script type="text/javascript" src='/js/sockets/Chat.js'></script>
     <script type="text/javascript" src='/js/sockets/googleRoom.js'></script>
 
-    <div class="google-room-chat" id="<%= id %>">
+    <div class="google-room-chat hidden-display-chat" id="<%= id %>">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-comment"></span> Chat
