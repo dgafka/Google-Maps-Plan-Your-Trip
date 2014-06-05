@@ -1,3 +1,6 @@
+body .hidden-display {
+  display: none;
+}
 body .jumbotron.text-center .authorization-type {
   font-weight: bold;
 }
@@ -43,6 +46,9 @@ body #map-canvas {
 body .chat-helper {
   display: none;
 }
+body .rooms-remove:hover {
+  background-color: #0000ed;
+}
 @media screen and (min-width: 1000px) {
   body .main-content {
     margin-left: 10%;
@@ -63,6 +69,11 @@ body .chat-helper {
   }
   body #map-canvas {
     width: 70% !important;
+  }
+}
+@media screen and (min-width: 550px) {
+  body #chatHideVisible {
+    display: none;
   }
 }
 @media screen and (max-width: 550px) {
@@ -88,10 +99,14 @@ body .chat-helper {
     border-bottom: 1px solid #fff;
   }
   body .google-room-chat {
-    display: none;
+    z-index: 9999;
+    width: 100% !important;
   }
   body #map-canvas {
     width: 100% !important;
+  }
+  body .hidden-display-chat {
+    display: none;
   }
 }
 @media screen and (max-width: 350px) {

@@ -39,10 +39,9 @@ $(document).ready(function(){
      * Set zoom
      */
     socket.on('google/map/zoom/set', function(data){
-        google.maps.event.removeListener(mapListeners.zoom_changed);
+        globalState = true;
         mapsManagement.onZoomChangedSet(data);
-        mapListeners.zoom_changed = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onCenterChangedGet);
-    });
+  });
 
     /**
      * Set center of the mpa

@@ -1,4 +1,5 @@
 var googleMap;
+var apiCall = false;
 
 var GoogleMaps = function(socket, roomId){
 
@@ -28,14 +29,18 @@ var GoogleMaps = function(socket, roomId){
      * @param event
      */
     this.onZoomChangedGet = function(event) {
-        this.onCenterChangedGet(undefined);
-        var zoom = googleMap.getZoom();
-        var roomId = this.roomId;
+        if(!apiCall) {
+            this.onCenterChangedGet(undefined);
+            var zoom = googleMap.getZoom();
+            var roomId = this.roomId;
 
-        socket.emit('google/map/zoom/get', {
-            zoom: zoom,
-            roomId: roomId
-        });
+            socket.emit('google/map/zoom/get', {
+                zoom: zoom,
+                roomId: roomId
+            });
+        }
+
+        apiCall = false;
     }.bind(this);
 
     /**
@@ -43,6 +48,7 @@ var GoogleMaps = function(socket, roomId){
      * @param data
      */
     this.onZoomChangedSet = function(data) {
+        apiCall = true;
         googleMap.setZoom(data);
     };
 
