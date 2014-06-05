@@ -87,9 +87,9 @@ module.exports = function(sockets) {
             var object = {
                 username: socket.handshake.user.username,
                 id      : id
-            }
+            };
             roomHelper.removeRoom(object);
-        })
+        });
 
     }.bind(this));
 
