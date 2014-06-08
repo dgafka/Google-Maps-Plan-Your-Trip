@@ -7,6 +7,11 @@ var GoogleMaps = function(socket, roomId){
     this.roomId     = roomId;
     this.markers    = [];
 
+    /**
+     * Type : Socket listener.
+     * Fires: When initial data arrives.
+     * Do   : Creates map with following data.
+     */
     this.initalize = function(data){
         var mapOptions = {
             center: new google.maps.LatLng(data.mapCenter.lat, data.mapCenter.lng),
@@ -26,8 +31,9 @@ var GoogleMaps = function(socket, roomId){
 
 
     /**
-     * Called when zoom is changed
-     * @param event
+     * Type : Google Map Event listener.
+     * Fires: When zoom of the map has been changed.
+     * Do   : Send information about zoom, that has been changed.
      */
     this.onZoomChangedGet = function(event) {
         if(!apiCall) {
@@ -35,7 +41,7 @@ var GoogleMaps = function(socket, roomId){
             var zoom = googleMap.getZoom();
             var roomId = this.roomId;
 
-            socket.emit('google/map/zoom/get', {
+            socket.emit('google/map/zoom/change', {
                 zoom: zoom,
                 roomId: roomId
             });
@@ -45,8 +51,9 @@ var GoogleMaps = function(socket, roomId){
     }.bind(this);
 
     /**
-     * Sets zoom
-     * @param data
+     * Type : Socket listener.
+     * Fires: When socket message with zoom level arrives
+     * Do   : Sets zoom level to following
      */
     this.onZoomChangedSet = function(data) {
         apiCall = true;
@@ -54,8 +61,9 @@ var GoogleMaps = function(socket, roomId){
     };
 
     /**
-     * Called when drag is end
-     * @param event
+     * Type : Google Map Event listener.
+     * Fires: When center of the map has been changed
+     * Do   : Send information about center of the map.
      */
     this.onCenterChangedGet   = function(event){
         var mapCenter = googleMap.getCenter();
@@ -65,12 +73,13 @@ var GoogleMaps = function(socket, roomId){
             lng: mapCenter.lng(),
             roomId: roomId
         };
-        socket.emit('google/map/center/get', mapCenter);
+        socket.emit('google/map/center/change', mapCenter);
     }.bind(this);
 
     /**
-     * Seta center of the map
-     * @param data
+     * Type : Socket listener.
+     * Fires: When socket message with center of the map arrives.
+     * Do   : Sets center of the map to the following one.
      */
     this.onCenterChangedSet     = function(data) {
         var location = new google.maps.LatLng(data.lat, data.lng);
@@ -78,17 +87,23 @@ var GoogleMaps = function(socket, roomId){
     };
 
     /**
-     * Fires when right click on the map
-     * @param event
+     * Type : Google Map Event listener.
+     * Fires: When right button has been clicked on the map
+     * Do   : Send information about position of clicked place, to create an marker.
      */
     this.onRightClickGet = function(event){
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
         var roomId    = this.roomId;
-        socket.emit('google/map/marker/get', {lat: lat, lng: lng, roomId: roomId});
+        socket.emit('google/map/marker/change', {lat: lat, lng: lng, roomId: roomId});
     }.bind(this);
 
 
+    /**
+     * Type : Socket listener.
+     * Fires: When socket message with position arrives
+     * Do   : Creates new marker on the map
+     */
     this.createMarker = function(data) {
 
         //create marker
@@ -102,7 +117,7 @@ var GoogleMaps = function(socket, roomId){
 
         //add listeners
         google.maps.event.addListener(marker, 'dragend', function(event){
-            socket.emit('google/map/marker/move', {
+            socket.emit('google/map/marker/position/change', {
                 lat: marker.getPosition().lat(),
                 lng: marker.getPosition().lng(),
                 id : marker.markerId
@@ -112,6 +127,11 @@ var GoogleMaps = function(socket, roomId){
         this.markers[marker.markerId] = marker;
     }.bind(this);
 
+    /**
+     * Type : Sockets listener.
+     * Fires: When socket with marker changed position arrives
+     * Do   : Sets position of changed marker
+     */
     this.setMarkerPosition = function(data) {
         var marker = this.markers[data.id];
         var location = new google.maps.LatLng(data.lat, data.lng);
@@ -119,6 +139,12 @@ var GoogleMaps = function(socket, roomId){
     }.bind(this);
 
 
+
+    /**
+     * Type : Google Map Event listener.
+     * Fires: Type of map has been changed
+     * Do   : Emits informations about type of map, that has been changed.
+     */
     this.onMapTypeChange = function(){
         var mapType = map.getMapTypeId();
         if(!apiCall) {
@@ -131,9 +157,23 @@ var GoogleMaps = function(socket, roomId){
         apiCall = false;
     }
 
+    /**
+     * Type : Sockets listener
+     * Fires: When map change message arrives
+     * Do   : Changes map type to following.
+     */
     this.setMapType     = function(mapType) {
         apiCall = true;
         googleMap.setMapTypeId(mapType);
+    }
+
+    /**
+     * Type : Google Map Event listener.
+     * Fires: When panorama has been changed.
+     * Do   : Emits information about type of panorama
+     */
+    this.onPanoramaChange = function() {
+        console.log(this);
     }
 
 };

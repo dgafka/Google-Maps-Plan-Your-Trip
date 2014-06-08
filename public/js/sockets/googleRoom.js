@@ -55,12 +55,21 @@ $(document).ready(function(){
      */
     socket.on('google/map/marker/set', mapsManagement.createMarker);
 
-    socket.on('google/map/marker/move/set', mapsManagement.setMarkerPosition);
+    /**
+     * Moves marker on clicked position
+     */
+    socket.on('google/map/marker/position/set', mapsManagement.setMarkerPosition);
 
+    /**
+     * Set map type
+     */
     socket.on('google/map/type/set', mapsManagement.setMapType);
 
+
+
+
     //
-    // DOM EVENTS
+    // DOM EVENTS MANAGEMENT
     //
     $('#message_send').on("click", function(event){
         chatManagement.sendMessage(roomId);
@@ -78,8 +87,11 @@ $(document).ready(function(){
         $('#map-canvas').toggleClass('hidden-display');
     });
 
+
+
+
     //
-    //GOOGLE MAPS EVENTS
+    //GOOGLE MAPS EVENTS MANAGEMENT
     //
     var addGoogleMapsEvents = function() {
         mapListeners.zoom_changed = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onZoomChangedGet);
@@ -90,9 +102,15 @@ $(document).ready(function(){
 
         mapListeners.projection   = google.maps.event.addListener(map, 'maptypeid_changed', mapsManagement.onMapTypeChange);
 
+        mapListeners.panorama     = google.maps.event.addListener(map.getStreetView(), 'pano_changed', mapsManagement.onPanoramaChange)
+
+        /**
+         * Scale the window to current resolution
+         */
         google.maps.event.addDomListener(window, "resize", function() {
             var center = map.getCenter();
             google.maps.event.trigger(map, "resize");
+            google.maps.event.trigger(map.getStreetView(), 'resize');
             map.setCenter(center);
         });
     };

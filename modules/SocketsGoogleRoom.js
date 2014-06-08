@@ -64,7 +64,7 @@ module.exports = function(sockets) {
         }.bind(this));
 
 
-        socket.on('google/map/zoom/get', function(data){
+        socket.on('google/map/zoom/change', function(data){
             var object = googleRooms[data.roomId];
             object.zoom = data.zoom;
 
@@ -72,7 +72,7 @@ module.exports = function(sockets) {
             socket.broadcast.to(data.roomId).emit('google/map/zoom/set', data);
         });
 
-        socket.on('google/map/center/get', function(data){
+        socket.on('google/map/center/change', function(data){
             var object = googleRooms[data.roomId];
             object.mapCenter.lat = data.lat;
             object.mapCenter.lng = data.lng;
@@ -80,7 +80,7 @@ module.exports = function(sockets) {
             socket.broadcast.to(data.roomId).emit('google/map/center/set', data);
         });
 
-        socket.on('google/map/marker/get', function(data){
+        socket.on('google/map/marker/change', function(data){
             //generate unique id based on timestamp
             var markerId = this.uniqueIdGenerator.v1();
             var marker = {
@@ -94,8 +94,8 @@ module.exports = function(sockets) {
             this.ioSockets.in(data.roomId).emit('google/map/marker/set', marker);
         }.bind(this));
 
-        socket.on('google/map/marker/move', function(data){
-            socket.broadcast.to(data.roomId).emit('google/map/marker/move/set', data);
+        socket.on('google/map/marker/position/change', function(data){
+            socket.broadcast.to(data.roomId).emit('google/map/marker/position/set', data);
         })
 
 
