@@ -25,6 +25,8 @@ var GoogleMaps = function(socket, roomId){
             overviewMapControl: true
         };
         googleMap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        this.setMapType(data.type);
+
 
         return googleMap;
     };
@@ -39,11 +41,10 @@ var GoogleMaps = function(socket, roomId){
         if(!apiCall) {
             this.onCenterChangedGet(undefined);
             var zoom = googleMap.getZoom();
-            var roomId = this.roomId;
 
             socket.emit('google/map/zoom/change', {
                 zoom: zoom,
-                roomId: roomId
+                roomId: this.roomId
             });
         }
 
@@ -67,11 +68,10 @@ var GoogleMaps = function(socket, roomId){
      */
     this.onCenterChangedGet   = function(event){
         var mapCenter = googleMap.getCenter();
-        var roomId    = this.roomId;
         mapCenter = {
             lat: mapCenter.lat(),
             lng: mapCenter.lng(),
-            roomId: roomId
+            roomId: this.roomId
         };
         socket.emit('google/map/center/change', mapCenter);
     }.bind(this);
@@ -94,8 +94,7 @@ var GoogleMaps = function(socket, roomId){
     this.onRightClickGet = function(event){
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        var roomId    = this.roomId;
-        socket.emit('google/map/marker/change', {lat: lat, lng: lng, roomId: roomId});
+        socket.emit('google/map/marker/change', {lat: lat, lng: lng, roomId: this.roomId});
     }.bind(this);
 
 
@@ -118,11 +117,12 @@ var GoogleMaps = function(socket, roomId){
         //add listeners
         google.maps.event.addListener(marker, 'dragend', function(event){
             socket.emit('google/map/marker/position/change', {
-                lat: marker.getPosition().lat(),
-                lng: marker.getPosition().lng(),
-                id : marker.markerId
+                lat     : marker.getPosition().lat(),
+                lng     : marker.getPosition().lng(),
+                id      : marker.markerId,
+                roomId  : this.roomId
             })
-        });
+        }.bind(this));
 
         this.markers[marker.markerId] = marker;
     }.bind(this);
@@ -150,7 +150,7 @@ var GoogleMaps = function(socket, roomId){
         if(!apiCall) {
             socket.emit('google/map/type/change', {
                 mapType: mapType,
-                roomid : roomId
+                roomId : this.roomId
             });
         }
 

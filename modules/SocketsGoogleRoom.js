@@ -27,7 +27,8 @@ module.exports = function(sockets) {
                     lng: 19.35791015625
                 },
                 zoom     : 7,
-                markers  : []
+                markers  : [],
+                type     : 'roadmap'
             };
             var found    = false;
             if(googleRooms.hasOwnProperty(object.roomId)){
@@ -64,14 +65,20 @@ module.exports = function(sockets) {
         }.bind(this));
 
 
+        /**
+         * Emits zoom change to everyone in the room
+         */
         socket.on('google/map/zoom/change', function(data){
             var object = googleRooms[data.roomId];
             object.zoom = data.zoom;
 
-            data = data.zoom;
-            socket.broadcast.to(data.roomId).emit('google/map/zoom/set', data);
+            var zoom = data.zoom;
+            socket.broadcast.to(data.roomId).emit('google/map/zoom/set', zoom);
         });
 
+        /**
+         * Emits new map center to everyone in the room
+         */
         socket.on('google/map/center/change', function(data){
             var object = googleRooms[data.roomId];
             object.mapCenter.lat = data.lat;
@@ -80,6 +87,9 @@ module.exports = function(sockets) {
             socket.broadcast.to(data.roomId).emit('google/map/center/set', data);
         });
 
+        /**
+         * Emits marker creation to everyone in the room
+         */
         socket.on('google/map/marker/change', function(data){
             //generate unique id based on timestamp
             var markerId = this.uniqueIdGenerator.v1();
@@ -94,12 +104,25 @@ module.exports = function(sockets) {
             this.ioSockets.in(data.roomId).emit('google/map/marker/set', marker);
         }.bind(this));
 
+        /**
+         * Emits new position of the marker to everyone in the room.
+         */
         socket.on('google/map/marker/position/change', function(data){
+            googleRooms[data.roomId].markers.forEach(function(marker){
+                if(marker.id == data.id) {
+                    marker.lat = data.lat;
+                    marker.lng = data.lng;
+                }
+            });
             socket.broadcast.to(data.roomId).emit('google/map/marker/position/set', data);
         })
 
 
+        /**
+         * Emits map new map type to everyone in the room
+         */
         socket.on('google/map/type/change', function(data){
+            googleRooms[data.roomId].type = data.mapType;
             socket.broadcast.to(data.roomId).emit('google/map/type/set', data.mapType);
         })
 
