@@ -50,9 +50,14 @@ $(document).ready(function(){
     }.bind(this));
 
 
+    /**
+     * Sets marker on the map
+     */
     socket.on('google/map/marker/set', mapsManagement.createMarker);
 
     socket.on('google/map/marker/move/set', mapsManagement.setMarkerPosition);
+
+    socket.on('google/map/type/set', mapsManagement.setMapType);
 
     //
     // DOM EVENTS
@@ -78,9 +83,13 @@ $(document).ready(function(){
     //
     var addGoogleMapsEvents = function() {
         mapListeners.zoom_changed = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onZoomChangedGet);
+
         mapListeners.dragend      = google.maps.event.addListener(map, 'dragend', mapsManagement.onCenterChangedGet);
-        //Marker creator + event handler for created marker
+
         mapListeners.rightclick   = google.maps.event.addListener(map, 'rightclick', mapsManagement.onRightClickGet);
+
+        mapListeners.projection   = google.maps.event.addListener(map, 'maptypeid_changed', mapsManagement.onMapTypeChange);
+
         google.maps.event.addDomListener(window, "resize", function() {
             var center = map.getCenter();
             google.maps.event.trigger(map, "resize");

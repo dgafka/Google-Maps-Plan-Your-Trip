@@ -14,7 +14,7 @@ var GoogleMaps = function(socket, roomId){
             navigationControl: true,
             panControl: false,
             zoomControl: true,
-            streetViewControl: false,
+            streetViewControl: true,
             scaleControl: true,
             rotateControl: true,
             overviewMapControl: true
@@ -117,5 +117,23 @@ var GoogleMaps = function(socket, roomId){
         var location = new google.maps.LatLng(data.lat, data.lng);
         marker.setPosition(location);
     }.bind(this);
+
+
+    this.onMapTypeChange = function(){
+        var mapType = map.getMapTypeId();
+        if(!apiCall) {
+            socket.emit('google/map/type/change', {
+                mapType: mapType,
+                roomid : roomId
+            });
+        }
+
+        apiCall = false;
+    }
+
+    this.setMapType     = function(mapType) {
+        apiCall = true;
+        googleMap.setMapTypeId(mapType);
+    }
 
 };

@@ -98,6 +98,11 @@ module.exports = function(sockets) {
             socket.broadcast.to(data.roomId).emit('google/map/marker/move/set', data);
         })
 
+
+        socket.on('google/map/type/change', function(data){
+            socket.broadcast.to(data.roomId).emit('google/map/type/set', data.mapType);
+        })
+
     }.bind(this));
 
 };
