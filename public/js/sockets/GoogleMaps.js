@@ -6,6 +6,7 @@ var GoogleMaps = function(socket, roomId){
     this.socket     = socket;
     this.roomId     = roomId;
     this.markers    = [];
+    this.streetView = false;
 
     /**
      * Type : Socket listener.
@@ -155,7 +156,7 @@ var GoogleMaps = function(socket, roomId){
         }
 
         apiCall = false;
-    }
+    };
 
     /**
      * Type : Sockets listener
@@ -165,15 +166,43 @@ var GoogleMaps = function(socket, roomId){
     this.setMapType     = function(mapType) {
         apiCall = true;
         googleMap.setMapTypeId(mapType);
-    }
+    };
 
     /**
      * Type : Google Map Event listener.
-     * Fires: When panorama has been changed.
-     * Do   : Emits information about type of panorama
+     * Fires: When panorama view has been changed.
+     * Do   : Emits information about current state of panorama
      */
-    this.onPanoramaChange = function() {
-        console.log(this);
+    this.onPanoramaViewChange = function() {
+        if(!apiCall) {
+            this.streetView = googleMap.getStreetView().getVisible();
+            socket.emit('google/map/panorama/change', {
+                isOn   : this.streetView,
+                roomId : this.roomId,
+                lat    : googleMap.getStreetView().getPosition().lat(),
+                lng    : googleMap.getStreetView().getPosition().lng()
+            })
+        }
+
+        apiCall = false;
+    }.bind(this);
+
+    /**
+     * Type : Sockets listener
+     * Fires: When panorama view change has arrived
+     * Do   : Changes panorama to the following one.
+     */
+    this.setPanorama   = function(data) {
+        apiCall = true;
+        if(data.isOn !== true) {
+            googleMap.getStreetView().setVisible(false);
+        }else {
+            if((typeof googleMap.getStreetView().getPosition() === "undefined") || !(googleMap.getStreetView().getPosition().lat() === data.lat && googleMap.getStreetView().getPosition().lng() === data.lng)) {
+                var location = new google.maps.LatLng(data.lat, data.lng);
+                googleMap.getStreetView().setPosition(location);
+                googleMap.getStreetView().setVisible(true);
+            }
+        }
     }
 
 };

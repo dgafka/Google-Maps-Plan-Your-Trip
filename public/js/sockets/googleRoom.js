@@ -61,11 +61,14 @@ $(document).ready(function(){
     socket.on('google/map/marker/position/set', mapsManagement.setMarkerPosition);
 
     /**
-     * Set map type
+     * Sets map type
      */
     socket.on('google/map/type/set', mapsManagement.setMapType);
 
-
+    /**
+     * Sets panorama
+     */
+    socket.on('google/map/panorama/set', mapsManagement.setPanorama);
 
 
     //
@@ -102,7 +105,9 @@ $(document).ready(function(){
 
         mapListeners.projection   = google.maps.event.addListener(map, 'maptypeid_changed', mapsManagement.onMapTypeChange);
 
-        mapListeners.panorama     = google.maps.event.addListener(map.getStreetView(), 'pano_changed', mapsManagement.onPanoramaChange)
+        mapListeners.panoramaView = google.maps.event.addListener(map.getStreetView(), 'status_changed', mapsManagement.onPanoramaViewChange);
+
+        mapListeners.panoramaVisibility = google.maps.event.addListener(map.getStreetView(), 'visible_changed', mapsManagement.onPanoramaViewChange);
 
         /**
          * Scale the window to current resolution

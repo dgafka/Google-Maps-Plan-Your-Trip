@@ -20,15 +20,20 @@ module.exports = function(sockets) {
 
             socket.join(object.roomId);
             var roomData = {
-                id       : roomId,
-                messages : [],
-                mapCenter: {
+                id          : roomId,
+                messages    : [],
+                mapCenter   : {
                     lat: 52.06600028274564,
                     lng: 19.35791015625
                 },
-                zoom     : 7,
-                markers  : [],
-                type     : 'roadmap'
+                zoom        : 7,
+                markers     : [],
+                type        : 'roadmap',
+                streetView  : {
+                    isOn: false,
+                    lat : 52.06600028274564,
+                    lng : 19.35791015625
+                }
             };
             var found    = false;
             if(googleRooms.hasOwnProperty(object.roomId)){
@@ -69,11 +74,8 @@ module.exports = function(sockets) {
          * Emits zoom change to everyone in the room
          */
         socket.on('google/map/zoom/change', function(data){
-            var object = googleRooms[data.roomId];
-            object.zoom = data.zoom;
-
-            var zoom = data.zoom;
-            socket.broadcast.to(data.roomId).emit('google/map/zoom/set', zoom);
+            googleRooms[data.roomId].zoom = data.zoom;
+            socket.broadcast.to(data.roomId).emit('google/map/zoom/set', data.zoom);
         });
 
         /**
@@ -125,6 +127,19 @@ module.exports = function(sockets) {
             googleRooms[data.roomId].type = data.mapType;
             socket.broadcast.to(data.roomId).emit('google/map/type/set', data.mapType);
         })
+
+        /**
+         * Emits new state of panorama
+         */
+        socket.on('google/map/panorama/change', function(data){
+            var streetView = googleRooms[data.roomId].streetView;
+            streetView.isOn = data.isOn;
+            streetView.lat  = data.lat;
+            streetView.lng  = data.lng;
+
+            socket.broadcast.to(data.roomId).emit('google/map/panorama/set', data);
+        })
+
 
     }.bind(this));
 
