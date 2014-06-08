@@ -23,7 +23,7 @@ $(document).ready(function(){
         addGoogleMapsEvents(map);
 
         data.markers.forEach(function(marker){
-            mapsManagement.onRightClickSet(marker);
+            mapsManagement.createMarker(marker);
         }.bind(this));
         //inicjalna data, tworzenie mapy zapendowanie messaegow
     });
@@ -39,7 +39,6 @@ $(document).ready(function(){
      * Set zoom
      */
     socket.on('google/map/zoom/set', function(data){
-        globalState = true;
         mapsManagement.onZoomChangedSet(data);
   });
 
@@ -51,7 +50,9 @@ $(document).ready(function(){
     }.bind(this));
 
 
-    socket.on('google/map/marker/set', mapsManagement.onRightClickSet);
+    socket.on('google/map/marker/set', mapsManagement.createMarker);
+
+    socket.on('google/map/marker/move/set', mapsManagement.setMarkerPosition);
 
     //
     // DOM EVENTS
@@ -78,6 +79,7 @@ $(document).ready(function(){
     var addGoogleMapsEvents = function() {
         mapListeners.zoom_changed = google.maps.event.addListener(map, 'zoom_changed', mapsManagement.onZoomChangedGet);
         mapListeners.dragend      = google.maps.event.addListener(map, 'dragend', mapsManagement.onCenterChangedGet);
+        //Marker creator + event handler for created marker
         mapListeners.rightclick   = google.maps.event.addListener(map, 'rightclick', mapsManagement.onRightClickGet);
         google.maps.event.addDomListener(window, "resize", function() {
             var center = map.getCenter();

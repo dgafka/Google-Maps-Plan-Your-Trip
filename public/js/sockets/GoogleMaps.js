@@ -3,8 +3,9 @@ var apiCall = false;
 
 var GoogleMaps = function(socket, roomId){
 
-    this.socket = socket;
-    this.roomId = roomId;
+    this.socket     = socket;
+    this.roomId     = roomId;
+    this.markers    = [];
 
     this.initalize = function(data){
         var mapOptions = {
@@ -84,27 +85,37 @@ var GoogleMaps = function(socket, roomId){
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
         var roomId    = this.roomId;
-
-        new google.maps.Marker({
-                position: {lat: lat, lng: lng},
-                map: map,
-                draggable: true,
-                animation: google.maps.Animation.DROP
-            });
-
         socket.emit('google/map/marker/get', {lat: lat, lng: lng, roomId: roomId});
     }.bind(this);
 
-    /**
-     * Set marker on the map
-     * @param data
-     */
-    this.onRightClickSet = function(data) {
-        new google.maps.Marker({
+
+    this.createMarker = function(data) {
+
+        //create marker
+        var marker = new google.maps.Marker({
             position: {lat: data.lat, lng: data.lng},
             map: map,
             draggable: true,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            markerId       : data.id
         });
-    };
+
+        //add listeners
+        google.maps.event.addListener(marker, 'dragend', function(event){
+            socket.emit('google/map/marker/move', {
+                lat: marker.getPosition().lat(),
+                lng: marker.getPosition().lng(),
+                id : marker.markerId
+            })
+        });
+
+        this.markers[marker.markerId] = marker;
+    }.bind(this);
+
+    this.setMarkerPosition = function(data) {
+        var marker = this.markers[data.id];
+        var location = new google.maps.LatLng(data.lat, data.lng);
+        marker.setPosition(location);
+    }.bind(this);
+
 };

@@ -5,8 +5,8 @@ var googleRooms = [];
 //this.ioSockets.manager.roomClients[socket.id] awesome get all rooms which client is in
 
 module.exports = function(sockets) {
-    this.ioSockets = sockets;
-
+    this.ioSockets         = sockets;
+    this.uniqueIdGenerator = require('node-uuid');
 
     this.ioSockets.on('connection', function(socket){
 
@@ -81,15 +81,22 @@ module.exports = function(sockets) {
         });
 
         socket.on('google/map/marker/get', function(data){
+            //generate unique id based on timestamp
+            var markerId = this.uniqueIdGenerator.v1();
             var marker = {
+                id : markerId,
                 lat: data.lat,
                 lng: data.lng
             };
             var object = googleRooms[data.roomId];
             object.markers.push(marker);
 
-            socket.broadcast.to(data.roomId).emit('google/map/marker/set', marker);
-        });
+            this.ioSockets.in(data.roomId).emit('google/map/marker/set', marker);
+        }.bind(this));
+
+        socket.on('google/map/marker/move', function(data){
+            socket.broadcast.to(data.roomId).emit('google/map/marker/move/set', data);
+        })
 
     }.bind(this));
 
