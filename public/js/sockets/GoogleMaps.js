@@ -156,7 +156,7 @@ var GoogleMaps = function(socket, roomId){
         }
 
         apiCall = false;
-    };
+    }.bind(this);
 
     /**
      * Type : Sockets listener
