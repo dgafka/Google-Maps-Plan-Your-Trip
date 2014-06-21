@@ -15,6 +15,17 @@ $(document).ready(function(){
     /** Accepts connection, when room is created */
     socket.on('rooms/create/client', roomsManagement.roomCreate);
 
+    socket.on('room/join/get', function(data){
+        if(data.failure) {
+            var selector = '#' + data.id + ' .modal-header-errors'
+            var info = $(selector);
+            info.empty();
+            info.append(data.failure);
+        }else {
+            window.location.href = window.location.origin + data.redirect;
+        }
+    })
+
     /** Send information about room which user joined and removes him from main room lobby */
     $('#room_storage a').on('click', roomsManagement.roomJoin);
 

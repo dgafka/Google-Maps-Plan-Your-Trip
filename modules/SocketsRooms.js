@@ -91,6 +91,19 @@ module.exports = function(sockets) {
             roomHelper.removeRoom(object);
         });
 
+        socket.on('room/join', function(data){
+            var roomManagement = require('../modules/RoomManagement');
+            var roomHelper     = new roomManagement();
+
+            roomHelper.findById(data, function(room){
+                if(room.password == data.password) {
+                    socket.emit('room/join/get', {redirect : '/rooms/' + data.roomId})
+                }else {
+                    socket.emit('room/join/get', {failure: 'Wrong password', id: 'joinModal' + data.roomId})
+                }
+            });
+        })
+
     }.bind(this));
 
 };

@@ -21,10 +21,22 @@ module.exports = function() {
                 };
                 roomsDescription.push(roomDescription);
             }
-
+//dodac room_template_script
             callback(roomsDescription);
         });
     };
+
+    this.findById = function(data, callback) {
+
+        this.room.find({_id: data.roomId}, function(err, room){
+            if(err) {
+                return console.error(err);
+            }
+
+            callback(room[0]);
+        })
+
+    }
 
     /**
      * Add new room to database

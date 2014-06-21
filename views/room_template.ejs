@@ -1,4 +1,40 @@
+<% if(room.password == "true") {%>
+
+<div class="modal fade" id="joinModal<%= room.id %>" tabindex="-1" role="dialog" aria-labelledby="joinModal" aria-hidden="true" data-id="<%= room.id %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Join room <%= room.name %></h4>
+                <div class="modal-header-errors"></div>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group" id="password">
+                        <label class="control-label">Password</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="room_join_submit<%= room.id %>">Join</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#room_join_submit<%= room.id %>').on('click', function(event){
+        var password = $(this).parent().parent().children('.modal-body').children('form').children('.form-group').children('input').val();
+        var id       = $(this).parent().parent().parent().parent().attr('data-id');
+        socket.emit('room/join', {roomId: id, password: password})
+    })
+</script>
+
+<a href="#" class="list-group-item room-join" id="<%= room.id %>" data-id="<%= room.id %>" data-toggle="modal" data-target="#joinModal<%= room.id %>">
+<% }else { %>
 <a href="/rooms/<%= room.id %>" class="list-group-item room-join" id="<%= room.id %>">
+<% } %>
     <span class="room_name">
         <%= room.name %>
             </span>

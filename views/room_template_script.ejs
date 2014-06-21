@@ -1,0 +1,7 @@
+<script>
+    $('#room_join_submit').on('click', function(event){
+        var password = $(this).parent().parent().children('.modal-body').children('form').children('.form-group').children('input').val();
+        var id       = $(this).parent().parent().parent().parent().attr('data-id');
+        socket.emit('room/join', {roomId: id, password: password})
+    })
+</script>
