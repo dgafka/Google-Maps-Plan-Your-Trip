@@ -1,3 +1,5 @@
+var mode = 'development';
+
 //*******************************
 //
 // Configuration for server application
@@ -52,12 +54,17 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
 
 
         app.use(flash());               /** use connect-flash for flash messages stored in session */
-        app.use(less({                  /** Less compiler, should compile every time server is restarted. */
-        src: path.join(__dirname, '../less'),
-            dest: path.join(__dirname, '../public/css'),
-            prefix: '/css',
-            force: true                 /** Force Less middleware to compile css every request (Change it on production) */
-        }));
+
+        if(mode == 'development') {
+
+            app.use(less({                  /** Less compiler, should compile every time server is restarted. */
+            src: path.join(__dirname, '../less'),
+                dest: path.join(__dirname, '../public/css'),
+                prefix: '/css',
+                force: true                 /** Force Less middleware to compile css every request (Change it on production) */
+            }));
+
+        }
 
         app.set('views', __dirname + '/../views');     /** Views directory path  */
         app.use(app.router);                           /** Enables routing       */
@@ -68,10 +75,14 @@ module.exports = function(app, server, express, passport, io, flash, path, less,
         app.use(express.static(path.join(__dirname, '../bower_components/bootstrap/dist')));   /**       --/--          */
     });
 
-    app.configure('development', function () {                                          /**    Error handling    */
-        app.use(express.logger('dev'));
-        app.use(express.errorHandler());
-    });
+    if(mode == 'development') {
+
+        app.configure('development', function () {                                          /**    Error handling    */
+            app.use(express.logger('dev'));
+            app.use(express.errorHandler());
+        });
+
+    }
 
     var routes      = require('../routes/routes')(app, passport);                        /**     Routes handler   */
 

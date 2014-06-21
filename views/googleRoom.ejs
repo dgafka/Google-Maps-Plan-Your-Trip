@@ -3,8 +3,9 @@
         html { height: 100% }
         body { height: 100%; margin: 0; padding: 0 }
     </style>
+    <!--<script type="application/javascript" src="/js/widgets/swipe.js"></script>-->
 
-    <div class="btn btn-primary" style="position:absolute;z-index:99999;top:50%;" id="chatHideVisible">Chat</div>
+    <div class="btn btn-primary" style="position:absolute;z-index:99999;top:50%; width: 25px; height: 100px; text-wrap:normal; margin-left: -1%;font-weight: bold;" id="chatHideVisible">C<br/>h<br/>a<br/>t</div>
 
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?language=pl?sensor=true"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -41,4 +42,22 @@
             $(window).resize();
         });
     </script>
+    <script>
+        //@TODO implement swipe
+//        var swipeOptions=
+//        {
+//            //Generic swipe handler for all directions
+//            swipeLeft:function(event, direction, distance, duration, fingerCount) {
+//                $(this).parent().carousel('prev');
+//            },
+//            swipeRight: function() {
+//                $(this).parent().carousel('next');
+//            },
+//            triggerOnTouchEnd:true,
+//            threshold:75,
+//            allowPageScroll:"auto"
+//        };
+//
+//        $("#chatHideVisible").swipe( swipeOptions );
+    <!--</script>-->
 <% include footer.ejs %>
