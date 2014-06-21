@@ -35,6 +35,7 @@ var Chat = function(socket){
      */
     this.receiveMessage = function(data) {
         $('#chat_box').append(data);
+        $('#chatHideVisible').css('background-color', '#2CC049');
     };
 
 };
