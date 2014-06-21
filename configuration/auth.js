@@ -13,13 +13,13 @@ module.exports = {
     'twitterAuth' : {
         'consumerKey' 		: '3bLFV24YVVBXwr00X5GaFba6Y',
         'consumerSecret' 	: 'lqtsXx14e39oSy69kwvsiHTsj9obMVYbo5HOtMn5Xwa6j2gZku',
-        'callbackURL' 		: 'http://localhost:3000/auth/twitter/callback'
+        'callbackURL' 		: 'http://95.85.9.19:3000/auth/twitter/callback'
     },
 
     'googleAuth' : {
         'clientID' 		: '408946951273-jr8ccdg2vcorbkgkfc1takjeimar09a5.apps.googleusercontent.com',
         'clientSecret' 	: 'Uacdd2vLJE4LZBM2-05SEdb3',
-        'callbackURL' 	: 'http://localhost:3000/auth/google/callback'
+        'callbackURL' 	: 'http://95.85.9.19:3000/auth/google/callback'
     }
 
 };
