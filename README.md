@@ -3,6 +3,7 @@
 
 <p>Google Map Collaborator is real time application based on websockets. Thanks to the app, you will be able to collaborate on google maps with other people in real time.</p>
 
+
 <h2>Application contains:</h2>
 - Boostrap 3
 - Node.js server
@@ -28,3 +29,4 @@ Go to "localhost:3000" and enjoy.
 *Extra, if you want facebook, twitter and google login system fully working, you will need to generate authorization keys and provide them in "/ configuration / auth.js".
 
 
+Application example: "http://95.85.9.19:3000/".
